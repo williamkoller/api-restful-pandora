@@ -5,7 +5,7 @@ import { LoadPaginateObjectService } from '@/shared/pagination/services/load-pag
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { FilterUserDto } from '../../dtos/filter-user/filter-user.dto';
+import { FilterUserDto } from '@/modules/users/dtos/filter-user/filter-user.dto';
 
 @Injectable()
 export class LoadAllUsersRepository {
