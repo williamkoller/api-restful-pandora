@@ -45,7 +45,7 @@ class ConfigService {
         autoLoadEntities: true,
         migrationsTableName: 'migrations',
         cli: {
-          migrationsDir: 'src/infra/db/migrations',
+          migrationsDir: 'src/infra/typeorm/migrations',
         },
         retryAttempts: 3,
         retryDelay: 3000,
