@@ -1,0 +1,19 @@
+version: '3'
+services:
+  pandora_database:
+    image: postgres:13.3-alpine
+    container_name: pandora_database
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - pandora_data:/var/lib/postgresql/data
+
+volumes:
+  pandora_data:
