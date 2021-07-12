@@ -13,11 +13,14 @@ export class LoadAllUsersService {
   async loadAllUsers(
     filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<User[]>> {
-    const users = await this.loadAllUsersRepository.loadAllUsers(filterUserDto);
+    const users: ResultWithPagination<User[]> =
+      await this.loadAllUsersRepository.loadAllUsers(filterUserDto);
 
     if (users.result?.length === 0) {
       throw new NotFoundException('No record found.');
     }
+
+    users.result.map((user) => delete user.password);
 
     return users;
   }

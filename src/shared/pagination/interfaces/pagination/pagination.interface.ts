@@ -1,7 +1,7 @@
 export interface Pagination {
-  page: number;
-  limit: number;
-  offSet: number;
-  pageCount: number;
-  totalCount: number;
+  readonly page: number;
+  readonly limit: number;
+  readonly offSet: number;
+  readonly pageCount: number;
+  readonly totalCount: number;
 }
