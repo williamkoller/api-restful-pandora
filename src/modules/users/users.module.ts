@@ -8,12 +8,21 @@ import { LoadUserByEmailRepository } from '@/modules/users/repositories/load-use
 import { AddUserService } from '@/modules/users/services/add-user/add-user.service';
 import { CalculateOffsetService } from '@/shared/pagination/services/calculate-offset/calculate-offset.service';
 import { LoadPaginateObjectService } from '@/shared/pagination/services/load-paginate-object/load-paginate-object.service';
-import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
+import { LoadEmailAlreadyExistsService } from '@/modules/users/services/load-email-already-exists/load-email-already-exists.service';
 import { UsersController } from '@/modules/users/controllers/users.controller';
 import { LoadAllUsersService } from '@/modules/users/services/load-all-users/load-all-users.service';
+import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
+import { LoadUserByIdRepository } from '@/modules/users/repositories/load-user-by-id/load-user-by-id.repository';
+import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, LoadUserByEmailRepository])],
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      LoadUserByEmailRepository,
+      LoadUserByIdRepository,
+    ]),
+  ],
   providers: [
     Hasher,
     AddUserRepository,
@@ -21,8 +30,10 @@ import { LoadAllUsersService } from '@/modules/users/services/load-all-users/loa
     AddUserService,
     CalculateOffsetService,
     LoadPaginateObjectService,
-    LoadUserByEmailService,
+    LoadEmailAlreadyExistsService,
     LoadAllUsersService,
+    LoadUserByEmailService,
+    LoadUserByIdService,
   ],
   controllers: [UsersController],
 })
