@@ -36,10 +36,12 @@ export class LoadAllUsersRepository {
 
     const pagination = this.loadPaginateObjectService.loadPaginateObject({
       limit,
-      offset: offSet,
+      offSet,
       page,
       totalCount,
     });
+
+    report.map((user: User) => delete user.password);
 
     return {
       paged: pagination,
