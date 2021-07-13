@@ -8,7 +8,7 @@ export class PaginationDto {
   readonly page: number;
 
   @IsNotEmpty()
-  readonly offset: number;
+  readonly offSet: number;
 
   @IsNotEmpty()
   readonly limit: number;
