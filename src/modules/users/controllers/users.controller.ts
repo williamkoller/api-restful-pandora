@@ -18,9 +18,10 @@ import { LoadAllUsersService } from '@/modules/users/services/load-all-users/loa
 import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { ValidationParamsPipe } from '@/common/pipes/validation-params.pipe';
-import { UserInputDto } from '@/modules/users/dtos/user-input/user-input.dto';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { UserInputEmailDto } from '@/modules/users/dtos/user-input/user-input-email/user-input.email.dto';
+import { UserInputIdDto } from '@/modules/users/dtos/user-input/user-input-id/user-input-id.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -72,17 +73,19 @@ export class UsersController {
     description: 'User not found.',
   })
   @Get('load-user-by-email')
-  async loadUserByEmail(@Query() userInputDto: UserInputDto): Promise<User> {
+  async loadUserByEmail(
+    @Query() userInputEmailDto: UserInputEmailDto,
+  ): Promise<User> {
     return await this.loadUserByEmailService.loadUserByEmail(
-      userInputDto.email,
+      userInputEmailDto.email,
     );
   }
 
   @Get('load-user-by-id/:id')
   async loadUserById(
     @Param(ValidationParamsPipe)
-    userInputDto: UserInputDto,
+    userInputIdDto: UserInputIdDto,
   ): Promise<UserReturnType> {
-    return await this.loadUserByIdService.loadUserById(userInputDto.id);
+    return await this.loadUserByIdService.loadUserById(userInputIdDto.id);
   }
 }
