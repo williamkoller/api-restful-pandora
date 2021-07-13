@@ -16,7 +16,8 @@ import { LoadAllUsersService } from '@/modules/users/services/load-all-users/loa
 import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { ValidationParamsPipe } from '@/common/pipes/validation-params.pipe';
-import { UserInputDto } from '../dtos/user-input/user-input.dto';
+import { UserInputDto } from '@/modules/users/dtos/user-input/user-input.dto';
+import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 
 @Controller('users')
 export class UsersController {
@@ -50,7 +51,7 @@ export class UsersController {
   async loadUserById(
     @Param(ValidationParamsPipe)
     userInputDto: UserInputDto,
-  ): Promise<User> {
+  ): Promise<UserReturnType> {
     return await this.loadUserByIdService.loadUserById(userInputDto.id);
   }
 }

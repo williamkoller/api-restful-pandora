@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { LoadUserByIdRepository } from '@/modules/users/repositories/load-user-by-id/load-user-by-id.repository';
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 
 @Injectable()
 export class LoadUserByIdService {
@@ -12,15 +12,24 @@ export class LoadUserByIdService {
     private readonly loadUserByIdRepository: LoadUserByIdRepository,
   ) {}
 
-  async loadUserById(id: string): Promise<User> {
+  async loadUserById(id: string): Promise<UserReturnType> {
     try {
-      const userExists = await this.loadUserByIdRepository.loadUserById(id);
+      const user = await this.loadUserByIdRepository.loadUserById(id);
 
-      if (!userExists) {
+      if (!user) {
         throw new NotFoundException('User not found.');
       }
 
-      return userExists;
+      const userReturntype: UserReturnType = {
+        id: user.id,
+        name: user.name,
+        surname: user.surname,
+        email: user.email,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt,
+      };
+
+      return userReturntype;
     } catch (e) {
       throw new BadRequestException(e.message);
     }

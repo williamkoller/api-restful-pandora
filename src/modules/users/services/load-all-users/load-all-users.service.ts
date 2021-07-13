@@ -20,8 +20,6 @@ export class LoadAllUsersService {
       throw new NotFoundException('No record found.');
     }
 
-    users.result.map((user) => delete user.password);
-
     return users;
   }
 }
