@@ -7,13 +7,13 @@ export class LoadPaginateObjectService {
   loadPaginateObject(paginationData: PaginationDto): Pagination {
     const { totalCount, page } = paginationData;
 
-    const offSet = Number(paginationData.offset);
+    const offSet = Number(paginationData.offSet);
     const limit = Number(paginationData.limit);
 
     const pageCount = Math.ceil(totalCount / limit);
 
     const result: Pagination = {
-      page: Number(page),
+      page,
       limit,
       offSet,
       pageCount,
