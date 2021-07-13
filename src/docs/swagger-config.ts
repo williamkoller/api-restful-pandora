@@ -6,6 +6,7 @@ export const swaggerConfig = (app: NestExpressApplication): void => {
     .setTitle('Pandora Example')
     .setDescription('The Pandora API description')
     .setVersion('0.0.1')
+    .addTag('users')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);

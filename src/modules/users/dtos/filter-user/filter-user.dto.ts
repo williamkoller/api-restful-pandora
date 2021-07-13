@@ -2,15 +2,21 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsOptional } from 'class-validator';
 
 export class FilterUserDto {
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   @IsOptional()
   readonly page?: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   @IsOptional()
   readonly limit?: number;
 
-  @ApiProperty()
+  @ApiProperty({
+    required: false,
+  })
   @IsOptional()
   readonly search?: string;
 }
