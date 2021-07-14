@@ -5,6 +5,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { ModelNotFoundException } from '@/common/filters/model-not-found.exception.filter';
 import { TimeoutInterceptor } from '@/common/interceptors/timeout.interceptor';
 import { swaggerConfig } from '@/docs/swagger-config';
+import { HttpExceptionFilter } from '@/common/filters/http-exception.filter';
 
 const key = 'fetch';
 
@@ -20,7 +21,7 @@ async function bootstrap(): Promise<void> {
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
-  app.useGlobalFilters(new ModelNotFoundException());
+  app.useGlobalFilters(new ModelNotFoundException(), new HttpExceptionFilter());
   app.useGlobalInterceptors(new TimeoutInterceptor());
 
   swaggerConfig(app);
