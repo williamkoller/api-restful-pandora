@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Query,
+  UseGuards,
   ValidationPipe,
 } from '@nestjs/common';
 import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
@@ -22,6 +23,7 @@ import { UserReturnType } from '@/modules/users/types/user-return/user-return.ty
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserInputEmailDto } from '@/modules/users/dtos/user-input/user-input-email/user-input.email.dto';
 import { UserInputIdDto } from '@/modules/users/dtos/user-input/user-input-id/user-input-id.dto';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -47,8 +49,13 @@ export class UsersController {
     return await this.addUserService.add(data);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('load-all-users')
   @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized user.',
+  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Load all users.',
@@ -63,25 +70,48 @@ export class UsersController {
     return await this.loadAllUsersService.loadAllUsers(filterUserDto);
   }
 
-  @HttpCode(HttpStatus.CREATED)
+  @UseGuards(JwtAuthGuard)
+  @Get('load-user-by-email')
+  @HttpCode(HttpStatus.OK)
   @ApiResponse({
-    status: HttpStatus.CREATED,
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized user.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
     description: 'Load user by email.',
   })
   @ApiResponse({
     status: HttpStatus.NOT_FOUND,
     description: 'User not found.',
   })
-  @Get('load-user-by-email')
   async loadUserByEmail(
     @Query() userInputEmailDto: UserInputEmailDto,
   ): Promise<User> {
-    return await this.loadUserByEmailService.loadUserByEmail(
+    const user = await this.loadUserByEmailService.loadUserByEmail(
       userInputEmailDto.email,
     );
+
+    delete user.password;
+
+    return user;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('load-user-by-id/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized user.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Load user by id.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User not found.',
+  })
   async loadUserById(
     @Param(ValidationParamsPipe)
     userInputIdDto: UserInputIdDto,
