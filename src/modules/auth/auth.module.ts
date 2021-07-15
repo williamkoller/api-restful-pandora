@@ -12,6 +12,7 @@ import { AuthService } from '@/modules/auth/services/auth.service';
 import { JwtStrategy } from '@/modules/auth/strategy/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
+import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { PassportModule } from '@nestjs/passport';
     HashComparer,
     JwtStrategy,
     PassportModule,
+    LoadProfileUserService,
   ],
   controllers: [AuthController],
 })
