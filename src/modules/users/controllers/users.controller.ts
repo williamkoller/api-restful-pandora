@@ -68,7 +68,7 @@ export class UsersController {
   async loadAll(
     @Query(ValidationPipe) filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<User[]>> {
-    return await this.loadAllUsersService.loadAllUsers(filterUserDto);
+    return await this.loadAllUsersService.findAllUsers(filterUserDto);
   }
 
   @UseGuards(JwtAuthGuard)

@@ -1,15 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { LoadUserByIdRepository } from '@/modules/users/repositories/load-user-by-id/load-user-by-id.repository';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
+import { UserRepository } from '../../repositories/user.repository';
 
 @Injectable()
 export class LoadUserByIdService {
-  constructor(
-    private readonly loadUserByIdRepository: LoadUserByIdRepository,
-  ) {}
+  constructor(private readonly userRepo: UserRepository) {}
 
   async loadUserById(id: string): Promise<UserReturnType> {
-    const user = await this.loadUserByIdRepository.loadUserById(id);
+    const user = await this.userRepo.findUserById(id);
 
     if (!user) {
       throw new NotFoundException('User not found.');
