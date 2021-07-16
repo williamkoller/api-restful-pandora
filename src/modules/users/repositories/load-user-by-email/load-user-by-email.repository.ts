@@ -5,7 +5,7 @@ import { EntityRepository, Repository } from 'typeorm';
 export class LoadUserByEmailRepository extends Repository<User> {
   async loadUserByEmail(email: string): Promise<User> {
     return await this.createQueryBuilder('users')
-      .where('users.email = email', { email })
+      .where('users.email = (:email)', { email })
       .getOne();
   }
 }

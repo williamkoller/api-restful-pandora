@@ -3,19 +3,19 @@ import { PaginationDto } from '@/shared/pagination/dtos/pagination/pagination.dt
 import { Pagination } from '@/shared/pagination/interfaces/pagination/pagination.interface';
 
 @Injectable()
-export class LoadPaginateObjectService {
-  loadPaginateObject(paginationData: PaginationDto): Pagination {
+export class BuildPaginationObjectService {
+  buildPaginationObject(paginationData: PaginationDto): Pagination {
     const { totalCount, page } = paginationData;
 
-    const offSet = Number(paginationData.offSet);
+    const offset = Number(paginationData.offset);
     const limit = Number(paginationData.limit);
 
     const pageCount = Math.ceil(totalCount / limit);
 
     const result: Pagination = {
-      page,
+      page: Number(page),
       limit,
-      offSet,
+      offset,
       pageCount,
       totalCount,
     };

@@ -13,10 +13,4 @@ export class FilterUserDto {
   })
   @IsOptional()
   readonly limit?: number;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsOptional()
-  readonly search?: string;
 }

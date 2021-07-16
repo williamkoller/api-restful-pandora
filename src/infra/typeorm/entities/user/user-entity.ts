@@ -1,5 +1,5 @@
 import { BaseEntity } from '@/infra/typeorm/entities/base-entity/base-entity';
-import { Column, Entity } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('users')
@@ -19,6 +19,11 @@ export class User extends BaseEntity {
   @ApiProperty()
   @Column('varchar')
   password: string;
+
+  @BeforeInsert()
+  emailToLowerCase(): void {
+    this.email = this.email.toLowerCase();
+  }
 
   constructor(partial: Partial<User>) {
     super();

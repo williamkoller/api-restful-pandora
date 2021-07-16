@@ -1,7 +1,7 @@
 import { User } from '@/infra/typeorm/entities/user/user-entity';
 import { ResultWithPagination } from '@/shared/pagination/interfaces/result-with-pagination/result-with-pagination.interface';
 import { CalculateOffsetService } from '@/shared/pagination/services/calculate-offset/calculate-offset.service';
-import { LoadPaginateObjectService } from '@/shared/pagination/services/load-paginate-object/load-paginate-object.service';
+import { BuildPaginationObjectService } from '@/shared/pagination/services/build-pagination-object/build-pagination-object.service';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -13,39 +13,34 @@ export class LoadAllUsersRepository {
     @InjectRepository(User)
     private readonly loadAllUsersRepository: Repository<User>,
     private readonly calculateOffsetService: CalculateOffsetService,
-    private readonly loadPaginateObjectService: LoadPaginateObjectService,
+    private readonly buildPaginationObjectService: BuildPaginationObjectService,
   ) {}
 
   async loadAllUsers(
     filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<User[]>> {
-    const page = filterUserDto.page | 1;
-    const limit = filterUserDto.limit | 1;
+    const page = filterUserDto.page || 1;
+    const limit = filterUserDto.limit || 1;
 
-    const { search } = filterUserDto;
+    const offset = this.calculateOffsetService.calculateOffset(page, limit);
 
-    const offSet = this.calculateOffsetService.calculateOffset(page, limit);
+    const [users, totalCount] = await this.loadAllUsersRepository.findAndCount({
+      skip: offset,
+      take: limit,
+    });
 
-    const query = this.loadAllUsersRepository.createQueryBuilder('users');
-
-    if (search) {
-      query.andWhere('users.name ILIKE :name', { name: `%${search}%` });
-    }
-
-    const [report, totalCount] = await query.getManyAndCount();
-
-    const pagination = this.loadPaginateObjectService.loadPaginateObject({
+    const pagination = this.buildPaginationObjectService.buildPaginationObject({
       limit,
-      offSet,
+      offset,
       page,
       totalCount,
     });
 
-    report.map((user: User) => delete user.password);
+    users.map((user: User) => delete user.password);
 
     return {
       paged: pagination,
-      result: report,
+      result: users,
     };
   }
 }

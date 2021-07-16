@@ -7,7 +7,7 @@ import { AddUserRepository } from '@/modules/users/repositories/add-user/add-use
 import { LoadUserByEmailRepository } from '@/modules/users/repositories/load-user-by-email/load-user-by-email.repository';
 import { AddUserService } from '@/modules/users/services/add-user/add-user.service';
 import { CalculateOffsetService } from '@/shared/pagination/services/calculate-offset/calculate-offset.service';
-import { LoadPaginateObjectService } from '@/shared/pagination/services/load-paginate-object/load-paginate-object.service';
+import { BuildPaginationObjectService } from '@/shared/pagination/services/build-pagination-object/build-pagination-object.service';
 import { LoadEmailAlreadyExistsService } from '@/modules/users/services/load-email-already-exists/load-email-already-exists.service';
 import { UsersController } from '@/modules/users/controllers/users.controller';
 import { LoadAllUsersService } from '@/modules/users/services/load-all-users/load-all-users.service';
@@ -30,7 +30,7 @@ import { LoadProfileUserService } from '@/modules/users/services/load-profile-us
     LoadAllUsersRepository,
     AddUserService,
     CalculateOffsetService,
-    LoadPaginateObjectService,
+    BuildPaginationObjectService,
     LoadEmailAlreadyExistsService,
     LoadAllUsersService,
     LoadUserByEmailService,
