@@ -19,8 +19,8 @@ export class LoadAllUsersRepository {
   async loadAllUsers(
     filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<User[]>> {
-    const page = filterUserDto.page || 1;
-    const limit = filterUserDto.limit || 1;
+    const page = filterUserDto.page ?? 1;
+    const limit = filterUserDto.limit ?? 10;
 
     const offset = this.calculateOffsetService.calculateOffset(page, limit);
 
