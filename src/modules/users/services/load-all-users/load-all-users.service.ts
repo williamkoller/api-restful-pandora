@@ -1,4 +1,4 @@
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { ResultWithPagination } from '@/shared/pagination/interfaces/result-with-pagination/result-with-pagination.interface';
 import { Injectable } from '@nestjs/common';
 import { FilterUserDto } from '@/modules/users/dtos/filter-user/filter-user.dto';
@@ -23,7 +23,7 @@ export class LoadAllUsersService {
 
     const offset = this.calculateOffsetService.calculateOffset(page, limit);
 
-    const [users, totalCount] = await this.userRepo.findAllUsers(offset, limit);
+    const [users, totalCount] = await this.userRepo.getAndCount(offset, limit);
 
     users.map((user: User) => delete user.password);
 

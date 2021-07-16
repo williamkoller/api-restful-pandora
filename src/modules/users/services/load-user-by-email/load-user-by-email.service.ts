@@ -1,4 +1,4 @@
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 
@@ -7,7 +7,7 @@ export class LoadUserByEmailService {
   constructor(private readonly userRepo: UserRepository) {}
 
   async loadUserByEmail(email: string): Promise<User> {
-    const userExists = await this.userRepo.findByEmail(email);
+    const userExists = await this.userRepo.getByEmail(email);
 
     if (!userExists?.email) {
       throw new NotFoundException('User not found.');

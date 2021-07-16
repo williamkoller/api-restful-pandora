@@ -12,7 +12,7 @@ import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserInputDto } from '@/modules/auth/dtos/user-input/user-input.dto';
 import { UserOutputDto } from '@/modules/auth/dtos/user-output/user-output.dto';
 import { AuthService } from '@/modules/auth/services/auth.service';
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';

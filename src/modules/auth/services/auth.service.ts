@@ -3,7 +3,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserInputDto } from '@/modules/auth/dtos/user-input/user-input.dto';
 import { UserOutputDto } from '@/modules/auth/dtos/user-output/user-output.dto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
 
 @Injectable()

@@ -1,4 +1,4 @@
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import {
   Body,
   Controller,

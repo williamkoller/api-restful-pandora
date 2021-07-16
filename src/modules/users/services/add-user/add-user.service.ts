@@ -1,4 +1,4 @@
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { Injectable } from '@nestjs/common';
 import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
 import { LoadEmailAlreadyExistsService } from '@/modules/users/services/load-email-already-exists/load-email-already-exists.service';

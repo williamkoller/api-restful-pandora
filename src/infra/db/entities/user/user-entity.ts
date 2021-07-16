@@ -1,4 +1,4 @@
-import { BaseEntity } from '@/infra/typeorm/entities/base-entity/base-entity';
+import { BaseEntity } from '@/infra/db/entities/base-entity/base-entity';
 import { BeforeInsert, Column, Entity } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { genSaltSync, hashSync } from 'bcrypt';

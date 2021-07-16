@@ -7,7 +7,7 @@ export class LoadProfileUserService {
   constructor(private readonly userRepo: UserRepository) {}
 
   async loadProfileUser(id: string): Promise<UserReturnType> {
-    const user = await this.userRepo.findUserById(id);
+    const user = await this.userRepo.getById(id);
 
     const userProfile: UserReturnType = {
       id: user.id,

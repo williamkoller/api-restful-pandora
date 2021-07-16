@@ -1,4 +1,4 @@
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { Injectable, UnauthorizedException } from '@nestjs/common';

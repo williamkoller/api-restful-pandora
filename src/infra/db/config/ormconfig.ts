@@ -1,4 +1,4 @@
-import { configService } from '@/infra/typeorm/config/config.service';
+import { configService } from '@/infra/db/config/config.service';
 import fs = require('fs');
 
 const [migrations] = configService.getTypeOrmConfig();

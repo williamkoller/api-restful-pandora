@@ -1,4 +1,4 @@
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 
@@ -7,7 +7,7 @@ export class LoadEmailAlreadyExistsService {
   constructor(private readonly userRepo: UserRepository) {}
 
   async loadEmailAlreadyExists(email: string): Promise<User> {
-    const userExists = await this.userRepo.findByEmail(email);
+    const userExists = await this.userRepo.getByEmail(email);
 
     if (userExists) {
       throw new ConflictException('Email already in use.');

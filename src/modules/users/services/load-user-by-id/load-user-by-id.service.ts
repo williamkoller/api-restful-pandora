@@ -7,7 +7,7 @@ export class LoadUserByIdService {
   constructor(private readonly userRepo: UserRepository) {}
 
   async loadUserById(id: string): Promise<UserReturnType> {
-    const user = await this.userRepo.findUserById(id);
+    const user = await this.userRepo.getById(id);
 
     if (!user) {
       throw new NotFoundException('User not found.');

@@ -1,5 +1,5 @@
 import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
-import { User } from '@/infra/typeorm/entities/user/user-entity';
+import { User } from '@/infra/db/entities/user/user-entity';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
