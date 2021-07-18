@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Param,
   Post,
+  Put,
   Query,
   UseGuards,
   ValidationPipe,
@@ -20,10 +21,12 @@ import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-em
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { ValidationParamsPipe } from '@/common/pipes/validation-params.pipe';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserInputEmailDto } from '@/modules/users/dtos/user-input/user-input-email/user-input.email.dto';
 import { UserInputIdDto } from '@/modules/users/dtos/user-input/user-input-id/user-input-id.dto';
 import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
+import { UpdateUserService } from '@/modules/users/services/update-user/update-user.service';
+import { UpdateUserDto } from '../dtos/update-user/update-user.dto';
 
 @ApiTags('users')
 @Controller('users')
@@ -33,6 +36,7 @@ export class UsersController {
     private readonly loadAllUsersService: LoadAllUsersService,
     private readonly loadUserByEmailService: LoadUserByEmailService,
     private readonly loadUserByIdService: LoadUserByIdService,
+    private readonly updateUserService: UpdateUserService,
   ) {}
 
   @Post('add-user')
@@ -119,6 +123,32 @@ export class UsersController {
     @Param(ValidationParamsPipe)
     userInputIdDto: UserInputIdDto,
   ): Promise<UserReturnType> {
-    return await this.loadUserByIdService.loadUserById(userInputIdDto.id);
+    const user = await this.loadUserByIdService.loadUserById(userInputIdDto.id);
+    delete user.password;
+    return user;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('update/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized user.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Update user with successfully.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User not found.',
+  })
+  @ApiBody({ type: UpdateUserDto })
+  async updateUser(
+    @Param('id', ValidationParamsPipe) id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
+    return await this.updateUserService.updateUser(id, updateUserDto);
   }
 }

@@ -1,27 +1,23 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { UserRepository } from '../../repositories/user.repository';
+import { User } from '@/infra/db/entities/user/user-entity';
 
 @Injectable()
 export class LoadUserByIdService {
   constructor(private readonly userRepo: UserRepository) {}
 
-  async loadUserById(id: string): Promise<UserReturnType> {
+  /**
+   * @param {string} id
+   * @return {*}  {Promise<User>}
+   * @memberof LoadUserByIdService
+   */
+  async loadUserById(id: string): Promise<User> {
     const user = await this.userRepo.getById(id);
 
     if (!user) {
       throw new NotFoundException('User not found.');
     }
 
-    const userReturntype: UserReturnType = {
-      id: user.id,
-      name: user.name,
-      surname: user.surname,
-      email: user.email,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
-
-    return userReturntype;
+    return user;
   }
 }

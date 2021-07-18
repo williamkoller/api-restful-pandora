@@ -4,6 +4,11 @@ import { Pagination } from '@/shared/pagination/interfaces/pagination/pagination
 
 @Injectable()
 export class BuildPaginationObjectService {
+  /**
+   * @param {PaginationDto} paginationData
+   * @return {*}  {Pagination}
+   * @memberof BuildPaginationObjectService
+   */
   buildPaginationObject(paginationData: PaginationDto): Pagination {
     const { totalCount, page } = paginationData;
 

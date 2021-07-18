@@ -15,6 +15,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
+  /**
+   * @param {{
+   *     sub: User['id'];
+   *     name: string;
+   *   }} payload
+   * @return {*}  {Promise<UserReturnType>}
+   * @memberof JwtStrategy
+   */
   async validate(payload: {
     sub: User['id'];
     name: string;

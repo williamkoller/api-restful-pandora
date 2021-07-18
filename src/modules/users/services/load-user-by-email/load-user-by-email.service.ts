@@ -6,6 +6,11 @@ import { UserRepository } from '@/modules/users/repositories/user.repository';
 export class LoadUserByEmailService {
   constructor(private readonly userRepo: UserRepository) {}
 
+  /**
+   * @param {string} email
+   * @return {*}  {Promise<User>}
+   * @memberof LoadUserByEmailService
+   */
   async loadUserByEmail(email: string): Promise<User> {
     const userExists = await this.userRepo.getByEmail(email);
 

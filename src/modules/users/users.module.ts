@@ -10,7 +10,10 @@ import { LoadAllUsersService } from '@/modules/users/services/load-all-users/loa
 import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
-import { UserRepository } from './repositories/user.repository';
+import { UserRepository } from '@/modules/users/repositories/user.repository';
+import { UpdateUserService } from '@/modules/users/services/update-user/update-user.service';
+import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
+import { Hasher } from '@/infra/cryptography/hasher/hasher';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, UserRepository])],
@@ -23,6 +26,9 @@ import { UserRepository } from './repositories/user.repository';
     LoadUserByEmailService,
     LoadUserByIdService,
     LoadProfileUserService,
+    UpdateUserService,
+    Hasher,
+    HashComparer,
   ],
   controllers: [UsersController],
 })

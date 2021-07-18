@@ -2,6 +2,13 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class PaginateResultService {
+  /**
+   * @param {string[]} keys
+   * @param {number} offset
+   * @param {number} limit
+   * @return {*}  {string[]}
+   * @memberof PaginateResultService
+   */
   paginateResultSetKeys(
     keys: string[],
     offset: number,

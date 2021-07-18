@@ -15,6 +15,11 @@ export class LoadAllUsersService {
     private readonly buildPaginationObjectService: BuildPaginationObjectService,
   ) {}
 
+  /**
+   * @param {FilterUserDto} filterUserDto
+   * @return {*}  {Promise<ResultWithPagination<Array<User>>>}
+   * @memberof LoadAllUsersService
+   */
   async findAllUsers(
     filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<Array<User>>> {

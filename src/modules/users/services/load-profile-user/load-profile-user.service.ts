@@ -6,6 +6,11 @@ import { UserRepository } from '@/modules/users/repositories/user.repository';
 export class LoadProfileUserService {
   constructor(private readonly userRepo: UserRepository) {}
 
+  /**
+   * @param {string} id
+   * @return {*}  {Promise<UserReturnType>}
+   * @memberof LoadProfileUserService
+   */
   async loadProfileUser(id: string): Promise<UserReturnType> {
     const user = await this.userRepo.getById(id);
 
@@ -14,9 +19,12 @@ export class LoadProfileUserService {
       name: user.name,
       surname: user.surname,
       email: user.email,
+      password: user.password,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
+
+    delete userProfile.password;
 
     return userProfile;
   }

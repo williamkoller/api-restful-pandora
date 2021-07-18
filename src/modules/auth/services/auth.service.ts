@@ -14,6 +14,11 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
+  /**
+   * @param {UserInputDto} data
+   * @return {*}  {Promise<UserOutputDto>}
+   * @memberof AuthService
+   */
   async validateUser(data: UserInputDto): Promise<UserOutputDto> {
     const user = await this.loadUserByEmailService.loadUserByEmail(data.email);
     if (!user) {
@@ -37,6 +42,11 @@ export class AuthService {
     };
   }
 
+  /**
+   * @param {User} user
+   * @return {*}  {Promise<string>}
+   * @memberof AuthService
+   */
   async generateJwt(user: User): Promise<string> {
     const payload = {
       sub: user.id,

@@ -1,7 +1,6 @@
 import { BaseEntity } from '@/infra/db/entities/base-entity/base-entity';
 import { BeforeInsert, Column, Entity } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { genSaltSync, hashSync } from 'bcrypt';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -24,12 +23,6 @@ export class User extends BaseEntity {
   @BeforeInsert()
   emailToLowerCase(): void {
     this.email = this.email.toLowerCase();
-  }
-
-  @BeforeInsert()
-  hashPassword(): void {
-    const salt = genSaltSync();
-    this.password = hashSync(this.password, salt);
   }
 
   constructor(partial: Partial<User>) {
