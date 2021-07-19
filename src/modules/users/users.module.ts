@@ -12,9 +12,7 @@ import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/lo
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { UpdateUserService } from '@/modules/users/services/update-user/update-user.service';
-import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
-import { Hasher } from '@/infra/cryptography/hasher/hasher';
-
+import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 @Module({
   imports: [TypeOrmModule.forFeature([User, UserRepository])],
   providers: [
@@ -27,8 +25,7 @@ import { Hasher } from '@/infra/cryptography/hasher/hasher';
     LoadUserByIdService,
     LoadProfileUserService,
     UpdateUserService,
-    Hasher,
-    HashComparer,
+    BcryptAdapter,
   ],
   controllers: [UsersController],
 })

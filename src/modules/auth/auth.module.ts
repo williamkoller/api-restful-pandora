@@ -1,4 +1,3 @@
-import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
 import { User } from '@/infra/db/entities/user/user-entity';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
@@ -12,10 +11,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
 import { UserRepository } from '../users/repositories/user.repository';
+import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, UserRepository]),
+    PassportModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        defaultStrategy: configService.get('JWT'),
+        property: configService.get('PROPERTY_USERS'),
+        session: configService.get('SESSION'),
+      }),
+    }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -31,7 +40,7 @@ import { UserRepository } from '../users/repositories/user.repository';
     AuthService,
     LoadUserByEmailService,
     LoadUserByIdService,
-    HashComparer,
+    BcryptAdapter,
     JwtStrategy,
     PassportModule,
     LoadProfileUserService,
