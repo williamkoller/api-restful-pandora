@@ -12,9 +12,9 @@ export class LoadUserByIdService {
    * @memberof LoadUserByIdService
    */
   async loadUserById(id: string): Promise<User> {
-    const user = await this.userRepo.getById(id);
+    const user = await this.userRepo.findById(id);
 
-    if (!user) {
+    if (!user?.id) {
       throw new NotFoundException('User not found.');
     }
 
