@@ -28,7 +28,10 @@ export class LoadAllUsersService {
 
     const offset = this.calculateOffsetService.calculateOffset(page, limit);
 
-    const [users, totalCount] = await this.userRepo.getAndCount(offset, limit);
+    const [users, totalCount] = await this.userRepo.findUserAndCount(
+      offset,
+      limit,
+    );
 
     users.map((user: User) => delete user.password);
 

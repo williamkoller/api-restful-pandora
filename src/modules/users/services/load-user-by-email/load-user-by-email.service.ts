@@ -12,7 +12,7 @@ export class LoadUserByEmailService {
    * @memberof LoadUserByEmailService
    */
   async loadUserByEmail(email: string): Promise<User> {
-    const userExists = await this.userRepo.getByEmail(email);
+    const userExists = await this.userRepo.findByEmail(email);
 
     if (!userExists?.email) {
       throw new NotFoundException('User not found.');

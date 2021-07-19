@@ -2,9 +2,9 @@ import { AddUserRepository } from '@/data/protocols/db/user/add-user.repository'
 import { User } from '@/infra/db/entities/user/user-entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
-import { GetByEmailRepository } from '@/data/protocols/db/user/get-by-email.repository';
+import { FindByEmailRepository } from '@/data/protocols/db/user/find-by-email.repository';
 import { FindByIdRepository } from '@/data/protocols/db/user/find-by-id.repository';
-import { GetAndCountRepository } from '@/data/protocols/db/user/get-and-count.repository';
+import { FindUserAndCountRepository } from '@/data/protocols/db/user/find-user-and-count.repository';
 import { UpdateUserRepository } from '@/data/protocols/db/user/update-user.repository';
 import { UpdateUserDto } from '../dtos/update-user/update-user.dto';
 
@@ -13,9 +13,9 @@ export class UserRepository
   extends Repository<User>
   implements
     AddUserRepository,
-    GetByEmailRepository,
+    FindByEmailRepository,
     FindByIdRepository,
-    GetAndCountRepository,
+    FindUserAndCountRepository,
     UpdateUserRepository
 {
   /**
@@ -42,7 +42,7 @@ export class UserRepository
    * @return {*}  {Promise<User>}
    * @memberof UserRepository
    */
-  async getByEmail(email: string): Promise<User> {
+  async findByEmail(email: string): Promise<User> {
     return await this.createQueryBuilder('users')
       .where('users.email = (:email)', { email })
       .getOne();
@@ -54,7 +54,10 @@ export class UserRepository
    * @return {*}  {Promise<[User[], number]>}
    * @memberof UserRepository
    */
-  async getAndCount(offset: number, limit: number): Promise<[User[], number]> {
+  async findUserAndCount(
+    offset: number,
+    limit: number,
+  ): Promise<[User[], number]> {
     return await this.findAndCount({ skip: offset, take: limit });
   }
 

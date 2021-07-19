@@ -12,7 +12,7 @@ export class LoadEmailAlreadyExistsService {
    * @memberof LoadEmailAlreadyExistsService
    */
   async loadEmailAlreadyExists(email: string): Promise<User> {
-    const userExists = await this.userRepo.getByEmail(email);
+    const userExists = await this.userRepo.findByEmail(email);
 
     if (userExists) {
       throw new ConflictException('Email already in use.');
