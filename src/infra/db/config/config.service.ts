@@ -51,6 +51,8 @@ class ConfigService {
         retryDelay: 3000,
         keepConnectionAlive: true,
         connectTimeoutMS: 15000,
+        url: this.getValue('DATABASE_URI'),
+        ssl: false,
       },
     ];
   }
@@ -62,6 +64,7 @@ const configService = new ConfigService(process.env).ensureValues([
   'POSTGRES_USER',
   'POSTGRES_PASSWORD',
   'POSTGRES_DATABASE',
+  'DATABASE_URI',
 ]);
 
 export { configService };
