@@ -3,12 +3,12 @@ import { Injectable } from '@nestjs/common';
 import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
 import { LoadEmailAlreadyExistsService } from '@/modules/users/services/load-email-already-exists/load-email-already-exists.service';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
-import { Hasher } from '@/infra/cryptography/hasher/hasher';
+import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 
 @Injectable()
 export class AddUserService {
   constructor(
-    private readonly hasher: Hasher,
+    private readonly bcryptAdapter: BcryptAdapter,
     private readonly userRepo: UserRepository,
     private readonly loadEmailAlreadyExistsService: LoadEmailAlreadyExistsService,
   ) {}
@@ -25,7 +25,7 @@ export class AddUserService {
 
     const addNewUser = {
       ...addUserDto,
-      password: await this.hasher.hash(addUserDto.password),
+      password: await this.bcryptAdapter.hash(addUserDto.password),
     };
 
     return await this.userRepo.add(addNewUser);
