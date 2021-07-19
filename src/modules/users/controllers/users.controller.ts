@@ -123,6 +123,7 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     description: 'User not found.',
   })
+  @ApiBody({ type: UserInputIdDto })
   async loadUserById(
     @Param(ValidationParamsPipe)
     userInputIdDto: UserInputIdDto,
@@ -172,6 +173,7 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     description: 'User not found.',
   })
+  @ApiBody({ type: UserInputIdDto })
   async deleteUser(
     @Param(ValidationParamsPipe) userInputIdDto: UserInputIdDto,
   ): Promise<ReturnMessageUserDeleteType> {
