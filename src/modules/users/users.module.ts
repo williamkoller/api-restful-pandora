@@ -13,6 +13,7 @@ import { LoadProfileUserService } from '@/modules/users/services/load-profile-us
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { UpdateUserService } from '@/modules/users/services/update-user/update-user.service';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
+import { DeleteUserService } from '@/modules/users/services/delete-user/delete-user.service';
 @Module({
   imports: [TypeOrmModule.forFeature([User, UserRepository])],
   providers: [
@@ -26,6 +27,7 @@ import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapte
     LoadProfileUserService,
     UpdateUserService,
     BcryptAdapter,
+    DeleteUserService,
   ],
   controllers: [UsersController],
 })

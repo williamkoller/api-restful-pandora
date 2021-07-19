@@ -2,6 +2,7 @@ import { User } from '@/infra/db/entities/user/user-entity';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -26,7 +27,9 @@ import { UserInputEmailDto } from '@/modules/users/dtos/user-input/user-input-em
 import { UserInputIdDto } from '@/modules/users/dtos/user-input/user-input-id/user-input-id.dto';
 import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 import { UpdateUserService } from '@/modules/users/services/update-user/update-user.service';
-import { UpdateUserDto } from '../dtos/update-user/update-user.dto';
+import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
+import { DeleteUserService } from '@/modules/users/services/delete-user/delete-user.service';
+import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
 
 @ApiTags('users')
 @Controller('users')
@@ -37,6 +40,7 @@ export class UsersController {
     private readonly loadUserByEmailService: LoadUserByEmailService,
     private readonly loadUserByIdService: LoadUserByIdService,
     private readonly updateUserService: UpdateUserService,
+    private readonly deleteUserService: DeleteUserService,
   ) {}
 
   @Post('add-user')
@@ -150,5 +154,27 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return await this.updateUserService.updateUser(id, updateUserDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('delete/:id')
+  @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized user.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Delete user with successfully.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'User not found.',
+  })
+  async deleteUser(
+    @Param(ValidationParamsPipe) userInputIdDto: UserInputIdDto,
+  ): Promise<ReturnMessageUserDeleteType> {
+    return await this.deleteUserService.deleteUser(userInputIdDto.id);
   }
 }

@@ -7,6 +7,8 @@ import { FindByIdRepository } from '@/data/protocols/db/user/find-by-id.reposito
 import { FindUserAndCountRepository } from '@/data/protocols/db/user/find-user-and-count.repository';
 import { UpdateUserRepository } from '@/data/protocols/db/user/update-user.repository';
 import { UpdateUserDto } from '../dtos/update-user/update-user.dto';
+import { DeleteUserRepository } from '@/data/protocols/db/user/delete-user.repository';
+import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
 
 @EntityRepository(User)
 export class UserRepository
@@ -16,7 +18,8 @@ export class UserRepository
     FindByEmailRepository,
     FindByIdRepository,
     FindUserAndCountRepository,
-    UpdateUserRepository
+    UpdateUserRepository,
+    DeleteUserRepository
 {
   /**
    * @param {AddUserDto} addUserDto
@@ -70,5 +73,13 @@ export class UserRepository
   async updateUser(user: User, updateUserDto: UpdateUserDto): Promise<User> {
     const userUpdated = this.merge(user, { ...updateUserDto });
     return await this.save(userUpdated);
+  }
+
+  async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
+    await this.delete(id);
+    return {
+      message: 'User deleted with successfully.',
+      deleted: true,
+    };
   }
 }
