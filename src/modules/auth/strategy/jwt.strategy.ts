@@ -14,20 +14,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       secretOrKey: process.env.JWT_SECRET,
     });
   }
-
   /**
-   * @param {{
-   *     sub: User['id'];
-   *     name: string;
-   *   }} payload
+   * @param {{ id: User['id'] }} payload
    * @return {*}  {Promise<UserReturnType>}
    * @memberof JwtStrategy
    */
-  async validate(payload: {
-    sub: User['id'];
-    name: string;
-  }): Promise<UserReturnType> {
-    const user = await this.loadUserByIdService.loadUserById(payload.sub);
+  async validate(payload: { id: User['id'] }): Promise<UserReturnType> {
+    const user = await this.loadUserByIdService.loadUserById(payload.id);
     if (!user) {
       throw new UnauthorizedException('Unauthorized user.');
     }
