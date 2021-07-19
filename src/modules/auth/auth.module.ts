@@ -20,7 +20,7 @@ import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapte
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        defaultStrategy: configService.get('JWT'),
+        defaultStrategy: configService.get('DEFAULT_STRATEGY'),
         property: configService.get('PROPERTY_USERS'),
         session: configService.get('SESSION'),
       }),
