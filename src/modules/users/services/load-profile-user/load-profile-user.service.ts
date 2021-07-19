@@ -12,7 +12,7 @@ export class LoadProfileUserService {
    * @memberof LoadProfileUserService
    */
   async loadProfileUser(id: string): Promise<UserReturnType> {
-    const user = await this.userRepo.getById(id);
+    const user = await this.userRepo.findById(id);
 
     const userProfile: UserReturnType = {
       id: user.id,
