@@ -75,6 +75,11 @@ export class UserRepository
     return await this.save(userUpdated);
   }
 
+  /**
+   * @param {string} id
+   * @return {*}  {Promise<ReturnMessageUserDeleteType>}
+   * @memberof UserRepository
+   */
   async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
     await this.delete(id);
     return {

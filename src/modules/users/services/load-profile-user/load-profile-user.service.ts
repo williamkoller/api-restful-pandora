@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
-import { UserRepository } from '@/modules/users/repositories/user.repository';
+import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 
 @Injectable()
 export class LoadProfileUserService {
-  constructor(private readonly userRepo: UserRepository) {}
+  constructor(private readonly loadUserByIdService: LoadUserByIdService) {}
 
   /**
    * @param {string} id
@@ -12,7 +12,7 @@ export class LoadProfileUserService {
    * @memberof LoadProfileUserService
    */
   async loadProfileUser(id: string): Promise<UserReturnType> {
-    const user = await this.userRepo.findById(id);
+    const user = await this.loadUserByIdService.loadUserById(id);
 
     const userProfile: UserReturnType = {
       id: user.id,

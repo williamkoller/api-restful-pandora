@@ -10,6 +10,11 @@ export class DeleteUserService {
     private readonly userRepo: UserRepository,
   ) {}
 
+  /**
+   * @param {string} id
+   * @return {*}  {Promise<ReturnMessageUserDeleteType>}
+   * @memberof DeleteUserService
+   */
   async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
     await this.loadUserByIdService.loadUserById(id);
     return await this.userRepo.deleteUser(id);
