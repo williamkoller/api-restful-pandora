@@ -1,17 +1,15 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
-import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
 import { LoadUserByIdService } from '../load-user-by-id/load-user-by-id.service';
-import { Hasher } from '@/infra/cryptography/hasher/hasher';
 import { User } from '@/infra/db/entities/user/user-entity';
+import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 
 @Injectable()
 export class UpdateUserService {
   constructor(
-    private readonly hasher: Hasher,
+    private readonly bcryptAdapter: BcryptAdapter,
     private readonly userRepo: UserRepository,
-    private readonly hashComparer: HashComparer,
     private readonly loadUserByIdService: LoadUserByIdService,
   ) {}
 
@@ -24,9 +22,9 @@ export class UpdateUserService {
   async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.loadUserByIdService.loadUserById(id);
 
-    const hashPassword = await this.hasher.hash(updateUserDto.password);
+    const hashPassword = await this.bcryptAdapter.hash(updateUserDto.password);
 
-    const comparePassword = await this.hashComparer.comparer(
+    const comparePassword = await this.bcryptAdapter.compare(
       updateUserDto.password,
       user.password,
     );

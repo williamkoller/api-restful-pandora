@@ -3,7 +3,7 @@ import { User } from '@/infra/db/entities/user/user-entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
 import { GetByEmailRepository } from '@/data/protocols/db/user/get-by-email.repository';
-import { GetByIdRepository } from '@/data/protocols/db/user/get-by-id.repository';
+import { FindByIdRepository } from '@/data/protocols/db/user/find-by-id.repository';
 import { GetAndCountRepository } from '@/data/protocols/db/user/get-and-count.repository';
 import { UpdateUserRepository } from '@/data/protocols/db/user/update-user.repository';
 import { UpdateUserDto } from '../dtos/update-user/update-user.dto';
@@ -14,7 +14,7 @@ export class UserRepository
   implements
     AddUserRepository,
     GetByEmailRepository,
-    GetByIdRepository,
+    FindByIdRepository,
     GetAndCountRepository,
     UpdateUserRepository
 {
@@ -33,8 +33,8 @@ export class UserRepository
    * @return {*}  {Promise<User>}
    * @memberof UserRepository
    */
-  async getById(id: string): Promise<User> {
-    return await this.findOne(id);
+  async findById(id: string): Promise<User> {
+    return await this.findOne({ where: { id } });
   }
 
   /**
