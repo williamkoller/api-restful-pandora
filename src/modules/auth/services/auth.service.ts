@@ -4,13 +4,13 @@ import { UserInputDto } from '@/modules/auth/dtos/user-input/user-input.dto';
 import { UserOutputDto } from '@/modules/auth/dtos/user-output/user-output.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@/infra/db/entities/user/user-entity';
-import { HashComparer } from '@/infra/cryptography/hasher-comparer/hasher-comparer';
+import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly loadUserByEmailService: LoadUserByEmailService,
-    private readonly hashCompare: HashComparer,
+    private readonly bcryptAdapter: BcryptAdapter,
     private readonly jwtService: JwtService,
   ) {}
 
@@ -25,12 +25,12 @@ export class AuthService {
       throw new UnauthorizedException('Unauthorized user.');
     }
 
-    const validPassword = await this.hashCompare.comparer(
+    const isValid = await this.bcryptAdapter.compare(
       data.password,
       user.password,
     );
 
-    if (!validPassword) {
+    if (!isValid) {
       throw new UnauthorizedException('Incorrect password or email.');
     }
 
@@ -49,7 +49,7 @@ export class AuthService {
    */
   async generateJwt(user: User): Promise<string> {
     const payload = {
-      sub: user.id,
+      id: user.id,
       name: user.name,
       surname: user.surname,
     };

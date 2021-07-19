@@ -1,21 +1,22 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Post,
-  Request,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserInputDto } from '@/modules/auth/dtos/user-input/user-input.dto';
 import { UserOutputDto } from '@/modules/auth/dtos/user-output/user-output.dto';
 import { AuthService } from '@/modules/auth/services/auth.service';
-import { User } from '@/infra/db/entities/user/user-entity';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
-import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
+import { Request } from 'express';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -41,13 +42,19 @@ export class AuthController {
 
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @Get('profile-user')
+  @Get('me')
   @HttpCode(HttpStatus.OK)
   @ApiResponse({
     status: HttpStatus.OK,
-    description: 'Load profile user.',
+    description: 'Load my user.',
   })
-  async loadProfileUser(@Request() user: User): Promise<UserReturnType> {
-    return await this.loadProfileUserService.loadProfileUser(user.id);
+  async me(@Req() request: Request): Promise<UserReturnType> {
+    try {
+      return await this.loadProfileUserService.loadProfileUser(
+        request.users.id,
+      );
+    } catch (e) {
+      throw new BadRequestException(e.message);
+    }
   }
 }
