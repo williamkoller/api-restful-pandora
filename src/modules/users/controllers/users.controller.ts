@@ -43,7 +43,7 @@ export class UsersController {
     private readonly deleteUserService: DeleteUserService,
   ) {}
 
-  @Post('add-user')
+  @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -58,7 +58,7 @@ export class UsersController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('load-all-users')
+  @Get()
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({
