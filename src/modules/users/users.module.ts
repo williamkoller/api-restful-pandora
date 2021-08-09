@@ -15,20 +15,17 @@ import { UpdateUserService } from '@/modules/users/services/update-user/update-u
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 import { DeleteUserService } from '@/modules/users/services/delete-user/delete-user.service';
 import { BullModule } from '@nestjs/bull';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ProcessUserService } from '@/modules/users/services/process-users/process-users.service';
+import { UserConsumer } from '@/modules/users/consumer/user.consumer';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, UserRepository]),
-    BullModule.registerQueueAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
+    BullModule.registerQueue({
       name: 'users',
-      useFactory: (configService: ConfigService) => ({
-        redis: {
-          host: configService.get('HOSTNAME_REDIS'),
-          port: configService.get('REDIS_PORT'),
-        },
-      }),
+      redis: {
+        host: process.env.REDIS_HOST,
+        port: Number(process.env.REDIS_PORT),
+      },
     }),
   ],
   providers: [
@@ -43,6 +40,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     UpdateUserService,
     BcryptAdapter,
     DeleteUserService,
+    ProcessUserService,
+    UserConsumer,
   ],
   controllers: [UsersController],
 })

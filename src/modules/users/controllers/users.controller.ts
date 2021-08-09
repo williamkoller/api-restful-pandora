@@ -30,6 +30,7 @@ import { UpdateUserService } from '@/modules/users/services/update-user/update-u
 import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
 import { DeleteUserService } from '@/modules/users/services/delete-user/delete-user.service';
 import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
+import { ProcessUserService } from '../services/process-users/process-users.service';
 
 @ApiTags('users')
 @Controller('users')
@@ -41,6 +42,7 @@ export class UsersController {
     private readonly loadUserByIdService: LoadUserByIdService,
     private readonly updateUserService: UpdateUserService,
     private readonly deleteUserService: DeleteUserService,
+    private readonly processUserService: ProcessUserService,
   ) {}
 
   @Post()
@@ -178,5 +180,21 @@ export class UsersController {
     @Param(ValidationParamsPipe) userInputIdDto: UserInputIdDto,
   ): Promise<ReturnMessageUserDeleteType> {
     return await this.deleteUserService.deleteUser(userInputIdDto.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('process-user')
+  @HttpCode(HttpStatus.OK)
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.UNAUTHORIZED,
+    description: 'Unauthorized user.',
+  })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Process queue',
+  })
+  async processUser(@Body() addUserDto: AddUserDto): Promise<void> {
+    await this.processUserService.processUser(addUserDto);
   }
 }
