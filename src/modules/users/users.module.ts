@@ -17,15 +17,20 @@ import { DeleteUserService } from '@/modules/users/services/delete-user/delete-u
 import { BullModule } from '@nestjs/bull';
 import { ProcessUserService } from '@/modules/users/services/process-users/process-users.service';
 import { UserConsumer } from '@/modules/users/consumer/user.consumer';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, UserRepository]),
-    BullModule.registerQueue({
-      name: 'users',
-      redis: {
-        host: process.env.REDIS_HOST,
-        port: Number(process.env.REDIS_PORT),
-      },
+    BullModule.registerQueueAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      name: process.env.REDIS_QUEUE_USERS,
+      useFactory: async (configService: ConfigService) => ({
+        redis: {
+          host: configService.get('REDIS_HOST'),
+          port: +configService.get('REDIS_PORT'),
+        },
+      }),
     }),
   ],
   providers: [
