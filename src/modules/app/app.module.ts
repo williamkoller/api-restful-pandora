@@ -7,6 +7,9 @@ import { AuthModule } from '@/modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { HealthModule } from '@/modules/health/health.module';
+import { TerminusModule } from '@nestjs/terminus';
+import { HealthController } from '@/modules/health/controllers/health.controller';
 
 @Module({
   imports: [
@@ -16,8 +19,10 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     forwardRef(() => CoreModule),
     forwardRef(() => AuthModule),
     forwardRef(() => MorganModule),
+    forwardRef(() => HealthModule),
+    forwardRef(() => TerminusModule),
   ],
-  controllers: [],
+  controllers: [HealthController],
   providers: [
     {
       provide: APP_INTERCEPTOR,
