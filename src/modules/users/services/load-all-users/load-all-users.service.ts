@@ -20,7 +20,7 @@ export class LoadAllUsersService {
    * @return {*}  {Promise<ResultWithPagination<Array<User>>>}
    * @memberof LoadAllUsersService
    */
-  async findAllUsers(
+  async findAll(
     filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<Array<User>>> {
     const page = filterUserDto.page ?? 1;
