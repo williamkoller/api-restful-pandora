@@ -5,6 +5,7 @@ import { UserOutputDto } from '@/modules/auth/dtos/user-output/user-output.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@/infra/db/entities/user/user-entity';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
+import { UserRepository } from '@/modules/users/repositories/user.repository';
 
 @Injectable()
 export class AuthService {
@@ -12,6 +13,7 @@ export class AuthService {
     private readonly loadUserByEmailService: LoadUserByEmailService,
     private readonly bcryptAdapter: BcryptAdapter,
     private readonly jwtService: JwtService,
+    private readonly userRepo: UserRepository,
   ) {}
 
   /**
@@ -29,6 +31,8 @@ export class AuthService {
       data.password,
       user.password,
     );
+
+    await this.userRepo.lastLogged(user.id, new Date());
 
     if (!isValid) {
       throw new UnauthorizedException('Incorrect password or email.');

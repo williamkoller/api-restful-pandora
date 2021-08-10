@@ -26,7 +26,7 @@ export class UserRepository
    * @return {*}  {Promise<User>}
    * @memberof UserRepository
    */
-  async add(addUserDto: AddUserDto): Promise<User> {
+  public async add(addUserDto: AddUserDto): Promise<User> {
     const newUser = this.create(addUserDto);
     return await this.save(newUser);
   }
@@ -36,7 +36,7 @@ export class UserRepository
    * @return {*}  {Promise<User>}
    * @memberof UserRepository
    */
-  async findById(id: string): Promise<User> {
+  public async findById(id: string): Promise<User> {
     return await this.findOne({ where: { id } });
   }
 
@@ -45,7 +45,7 @@ export class UserRepository
    * @return {*}  {Promise<User>}
    * @memberof UserRepository
    */
-  async findByEmail(email: string): Promise<User> {
+  public async findByEmail(email: string): Promise<User> {
     return await this.createQueryBuilder('users')
       .where('users.email = (:email)', { email })
       .getOne();
@@ -57,7 +57,7 @@ export class UserRepository
    * @return {*}  {Promise<[User[], number]>}
    * @memberof UserRepository
    */
-  async findUserAndCount(
+  public async findUserAndCount(
     offset: number,
     limit: number,
   ): Promise<[User[], number]> {
@@ -70,7 +70,10 @@ export class UserRepository
    * @return {*}  {Promise<User>}
    * @memberof UserRepository
    */
-  async updateUser(user: User, updateUserDto: UpdateUserDto): Promise<User> {
+  public async updateUser(
+    user: User,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
     const userUpdated = this.merge(user, { ...updateUserDto });
     return await this.save(userUpdated);
   }
@@ -80,11 +83,24 @@ export class UserRepository
    * @return {*}  {Promise<ReturnMessageUserDeleteType>}
    * @memberof UserRepository
    */
-  async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
+  public async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
     await this.delete(id);
     return {
       message: 'User deleted with successfully.',
       deleted: true,
     };
+  }
+
+  /**
+   * @param {string} id
+   * @param {Date} lastLogged
+   * @return {*}  {Promise<void>}
+   * @memberof UserRepository
+   */
+  public async lastLogged(id: string, lastLogged: Date): Promise<void> {
+    await this.query('UPDATE "users" SET "last_logged" = $2 WHERE id = $1', [
+      id,
+      lastLogged,
+    ]);
   }
 }
