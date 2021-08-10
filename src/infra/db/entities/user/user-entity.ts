@@ -1,29 +1,27 @@
 import { BaseEntity } from '@/infra/db/entities/base-entity/base-entity';
 import { BeforeInsert, Column, Entity } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
 
 @Entity('users')
 export class User extends BaseEntity {
-  @ApiProperty()
-  @Column('varchar')
+  @Column({ type: 'varchar', nullable: false })
   name: string;
 
-  @ApiProperty()
-  @Column('varchar')
+  @Column({ type: 'varchar', nullable: false })
   surname: string;
 
-  @ApiProperty()
-  @Column('varchar')
+  @Column({ type: 'varchar', nullable: false })
   email: string;
 
-  @ApiProperty()
-  @Column('varchar')
+  @Column({ type: 'varchar', nullable: false })
   password: string;
 
   @BeforeInsert()
   emailToLowerCase(): void {
     this.email = this.email.toLowerCase();
   }
+
+  @Column({ type: 'date', name: 'last_logged', nullable: true })
+  lastLogged?: Date;
 
   constructor(partial: Partial<User>) {
     super();
