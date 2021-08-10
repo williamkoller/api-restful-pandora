@@ -15,13 +15,17 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   password: string;
 
+  @Column({
+    name: 'last_logged',
+    type: 'timestamptz',
+    nullable: true,
+  })
+  lastLogged?: Date;
+
   @BeforeInsert()
   emailToLowerCase(): void {
     this.email = this.email.toLowerCase();
   }
-
-  @Column({ type: 'date', name: 'last_logged', nullable: true })
-  lastLogged?: Date;
 
   constructor(partial: Partial<User>) {
     super();
