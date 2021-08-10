@@ -22,6 +22,7 @@ export class LoadProfileUserService {
       password: user.password,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      lastLogged: user.lastLogged,
     };
 
     delete userProfile.password;

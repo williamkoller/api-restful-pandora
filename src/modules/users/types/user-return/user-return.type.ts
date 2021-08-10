@@ -6,4 +6,5 @@ export type UserReturnType = {
   password: string;
   createdAt: Date;
   updatedAt: Date;
+  lastLogged?: Date;
 };
