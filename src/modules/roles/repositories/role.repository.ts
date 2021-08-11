@@ -25,6 +25,17 @@ export class RoleRepository extends Repository<Role> {
   }
 
   /**
+   * @param {string} name
+   * @return {*}  {Promise<Role[]>}
+   * @memberof RoleRepository
+   */
+  public async findByName(name: string): Promise<Role[]> {
+    return await this.createQueryBuilder('roles')
+      .where('(roles.name ILIKE :name)', { name: `%${name}%` })
+      .getMany();
+  }
+
+  /**
    * @param {number} offset
    * @param {number} limit
    * @return {*}  {Promise<[Role[], number]>}

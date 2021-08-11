@@ -9,9 +9,8 @@ export class AddRoleDto {
   @IsNotEmpty()
   description: string;
 
-  @IsString()
-  @IsNotEmpty()
   @IsArray()
+  @IsNotEmpty()
   permissions: string[];
 
   @IsString()
