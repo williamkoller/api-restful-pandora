@@ -31,6 +31,9 @@ import { DeleteUserService } from '@/modules/users/services/delete-user/delete-u
 import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
 import { ProcessUserService } from '@/modules/users/services/process-users/process-users.service';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
+import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
+import { Permissions } from '@/modules/users/decorators/permissions.decorator';
+import { PermissionsGuard } from '../guards/permissions.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -59,8 +62,9 @@ export class UsersController {
     return await this.addUserService.add(data);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get()
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({

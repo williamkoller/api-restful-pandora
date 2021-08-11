@@ -9,6 +9,7 @@ export const swaggerConfig = (app: NestExpressApplication): void => {
     .addTag('users')
     .addTag('auth')
     .addTag('health')
+    .addTag('roles')
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);

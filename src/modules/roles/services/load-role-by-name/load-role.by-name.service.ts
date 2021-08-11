@@ -11,12 +11,11 @@ export class LoadRoleByNameService {
    * @return {*}  {Promise<Role[]>}
    * @memberof LoadRoleByNameService
    */
-  public async findByName(name: string): Promise<Role[]> {
+  public async findByName(name: string): Promise<Role> {
     const roles = await this.roleRepo.findByName(name);
 
-    if (roles.length) {
-      const roleName = roles.map((role: Role) => role.name === name);
-      throw new ConflictException(`Role ${roleName} already in use.`);
+    if (roles) {
+      throw new ConflictException(`Role ${name} already in use.`);
     }
 
     return roles;

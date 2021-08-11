@@ -43,10 +43,10 @@ export class RoleRepository
    * @return {*}  {Promise<Role[]>}
    * @memberof RoleRepository
    */
-  public async findByName(name: string): Promise<Role[]> {
+  public async findByName(name: string): Promise<Role> {
     return await this.createQueryBuilder('roles')
       .where('(roles.name ILIKE :name)', { name: `%${name}%` })
-      .getMany();
+      .getOne();
   }
 
   /**
