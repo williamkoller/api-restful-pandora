@@ -98,7 +98,7 @@ export class UserRepository
    * @memberof UserRepository
    */
   public async lastLogged(id: string, lastLogged: Date): Promise<void> {
-    await this.query('UPDATE "users" SET "last_logged" = $2 WHERE id = $1', [
+    await this.query('UPDATE "users" SET "lastLogged" = $2 WHERE id = $1', [
       id,
       lastLogged,
     ]);
