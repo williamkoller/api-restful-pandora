@@ -10,6 +10,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { HealthModule } from '@/modules/health/health.module';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from '@/modules/health/controllers/health.controller';
+import { RolesModule } from '@/modules/roles/roles.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { HealthController } from '@/modules/health/controllers/health.controller
     forwardRef(() => MorganModule),
     forwardRef(() => HealthModule),
     forwardRef(() => TerminusModule),
+    forwardRef(() => RolesModule),
   ],
   controllers: [HealthController],
   providers: [
