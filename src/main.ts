@@ -25,6 +25,12 @@ async function bootstrap(): Promise<void> {
   app.useGlobalInterceptors(new TimeoutInterceptor());
 
   swaggerConfig(app);
+
+  app.enableCors({
+    allowedHeaders: '*',
+    exposedHeaders: '*',
+  });
+
   await app.listen(process.env.PORT, () => logger.log(`App running 🔥`));
 
   if (module.hot) {
