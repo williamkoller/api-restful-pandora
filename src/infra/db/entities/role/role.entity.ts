@@ -15,7 +15,7 @@ export class Role extends BaseEntity {
   @Column({ type: 'uuid', nullable: true })
   userId: string;
 
-  @ManyToOne(() => User, (user) => user.rolePermissions, {
+  @ManyToOne(() => User, (user) => user.roles, {
     nullable: true,
     cascade: true,
   })

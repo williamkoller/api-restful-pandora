@@ -24,7 +24,7 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Role, (role) => role.user, { eager: true })
   @JoinTable()
-  rolePermissions: Role[];
+  roles: Role[];
 
   @BeforeInsert()
   emailToLowerCase(): void {
