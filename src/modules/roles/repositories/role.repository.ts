@@ -1,10 +1,24 @@
+import {
+  AddRoleRepository,
+  FindByIdRepository,
+  FindByNameRepository,
+  FindRoleAndCountRepository,
+  UpdateRoleRepository,
+} from '@/data/protocols/db/role';
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { AddRoleDto } from '../dtos/add-role/add-role.dto';
-import { UpdateRoleDto } from '../dtos/update-role/update-role.dto';
+import { AddRoleDto, UpdateRoleDto } from '@/modules/roles/dtos';
 
 @EntityRepository(Role)
-export class RoleRepository extends Repository<Role> {
+export class RoleRepository
+  extends Repository<Role>
+  implements
+    AddRoleRepository,
+    FindByIdRepository,
+    FindByNameRepository,
+    FindRoleAndCountRepository,
+    UpdateRoleRepository
+{
   /**
    * @param {AddRoleDto} addRoleDto
    * @return {*}  {Promise<Role>}
