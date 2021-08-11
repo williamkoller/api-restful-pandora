@@ -8,8 +8,8 @@ export class CreateTableUsers1625976081532 implements MigrationInterface {
         "surname" character varying NOT NULL,
         "email" character varying NOT NULL,
         "password" character varying NOT NULL,
-        created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT users_unique_email UNIQUE (email),
         CONSTRAINT "users_pk" PRIMARY KEY ("id"));`);
   }
