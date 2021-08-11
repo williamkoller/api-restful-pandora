@@ -33,7 +33,7 @@ import { ProcessUserService } from '@/modules/users/services/process-users/proce
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
 import { Permissions } from '@/modules/users/decorators/permissions.decorator';
-import { PermissionsGuard } from '../guards/permissions.guard';
+import { PermissionsGuard } from '@/modules/users/guards/permissions.guard';
 
 @ApiTags('users')
 @Controller('users')
@@ -49,6 +49,7 @@ export class UsersController {
   ) {}
 
   @Post()
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -85,8 +86,8 @@ export class UsersController {
     return await this.loadAllUsersService.findAll(filterUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('load-user-by-email')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({
@@ -113,8 +114,8 @@ export class UsersController {
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('load-user-by-id/:id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({
@@ -139,8 +140,8 @@ export class UsersController {
     return user;
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put('update/:id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({
@@ -163,8 +164,8 @@ export class UsersController {
     return await this.updateUserService.updateUser(id, updateUserDto);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete('delete/:id')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({
@@ -186,8 +187,8 @@ export class UsersController {
     return await this.deleteUserService.deleteUser(userInputIdDto.id);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post('process-user')
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiBearerAuth()
   @ApiResponse({
