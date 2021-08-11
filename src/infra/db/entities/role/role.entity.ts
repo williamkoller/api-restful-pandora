@@ -1,5 +1,5 @@
 import { Column, Entity, JoinTable, ManyToOne } from 'typeorm';
-import { BaseEntity } from '../base-entity/base-entity';
+import { BaseEntity } from '@/infra/db/entities/base-entity/base-entity';
 import { User } from '@/infra/db/entities/user/user-entity';
 
 @Entity('roles')
@@ -13,14 +13,14 @@ export class Role extends BaseEntity {
   permissions: string[];
 
   @Column({ type: 'uuid', nullable: true })
-  userId: string;
+  userId?: string;
 
   @ManyToOne(() => User, (user) => user.roles, {
     nullable: true,
     cascade: true,
   })
   @JoinTable()
-  user: User;
+  user?: User;
 
   constructor(partial: Partial<Role>) {
     super();

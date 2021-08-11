@@ -1,7 +1,7 @@
 import { InjectQueue } from '@nestjs/bull';
 import { Injectable } from '@nestjs/common';
 import { Queue } from 'bull';
-import { AddUserDto } from '../../dtos/add-user/add-user.dto';
+import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
 
 @Injectable()
 export class ProcessUserService {

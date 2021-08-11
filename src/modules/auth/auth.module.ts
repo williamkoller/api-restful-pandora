@@ -10,12 +10,13 @@ import { JwtStrategy } from '@/modules/auth/strategy/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
-import { UserRepository } from '../users/repositories/user.repository';
+import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
+import { RoleRepository } from '@/modules/roles/repositories/role.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, UserRepository]),
+    TypeOrmModule.forFeature([User, UserRepository, RoleRepository]),
     PassportModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

@@ -6,7 +6,7 @@ import { FindByEmailRepository } from '@/data/protocols/db/user/find-by-email.re
 import { FindByIdRepository } from '@/data/protocols/db/user/find-by-id.repository';
 import { FindUserAndCountRepository } from '@/data/protocols/db/user/find-user-and-count.repository';
 import { UpdateUserRepository } from '@/data/protocols/db/user/update-user.repository';
-import { UpdateUserDto } from '../dtos/update-user/update-user.dto';
+import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
 import { DeleteUserRepository } from '@/data/protocols/db/user/delete-user.repository';
 import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
 

@@ -21,7 +21,6 @@ import { LoadAllUsersService } from '@/modules/users/services/load-all-users/loa
 import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { ValidationParamsPipe } from '@/common/pipes/validation-params.pipe';
-import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { UserInputEmailDto } from '@/modules/users/dtos/user-input/user-input-email/user-input.email.dto';
 import { UserInputIdDto } from '@/modules/users/dtos/user-input/user-input-id/user-input-id.dto';
@@ -30,7 +29,8 @@ import { UpdateUserService } from '@/modules/users/services/update-user/update-u
 import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
 import { DeleteUserService } from '@/modules/users/services/delete-user/delete-user.service';
 import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
-import { ProcessUserService } from '../services/process-users/process-users.service';
+import { ProcessUserService } from '@/modules/users/services/process-users/process-users.service';
+import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 
 @ApiTags('users')
 @Controller('users')

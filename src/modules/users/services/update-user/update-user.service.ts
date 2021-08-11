@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
-import { LoadUserByIdService } from '../load-user-by-id/load-user-by-id.service';
+import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { User } from '@/infra/db/entities/user/user-entity';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 

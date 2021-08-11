@@ -1,7 +1,7 @@
 import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
 import { Injectable } from '@nestjs/common';
-import { UserRepository } from '../../repositories/user.repository';
-import { LoadUserByIdService } from '../load-user-by-id/load-user-by-id.service';
+import { UserRepository } from '@/modules/users/repositories/user.repository';
+import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 
 @Injectable()
 export class DeleteUserService {

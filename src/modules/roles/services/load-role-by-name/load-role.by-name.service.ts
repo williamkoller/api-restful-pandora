@@ -1,6 +1,6 @@
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { ConflictException, Injectable } from '@nestjs/common';
-import { RoleRepository } from '../../repositories/role.repository';
+import { RoleRepository } from '@/modules/roles/repositories/role.repository';
 
 @Injectable()
 export class LoadRoleByNameService {

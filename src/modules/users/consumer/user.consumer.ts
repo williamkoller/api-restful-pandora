@@ -7,7 +7,7 @@ import {
 } from '@nestjs/bull';
 import { Job, Queue } from 'bull';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
-import { UserType } from '@/modules/users/types/user/user.type';
+import { UserJobType } from '@/modules/users/types/user-job/user-job.type';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 import { Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -26,7 +26,7 @@ export class UserConsumer {
   ) {}
 
   @Process('process_user')
-  async processUser(job: Job<UserType>): Promise<void> {
+  async processUser(job: Job<UserJobType>): Promise<void> {
     const { name, surname, email, password } = job.data;
 
     await this.loadEmailAlreadyExistsService.loadEmailAlreadyExists(email);
@@ -41,7 +41,7 @@ export class UserConsumer {
   }
 
   @OnQueueCompleted()
-  async onComplete(job: Job<UserType>) {
+  async onComplete(job: Job<UserJobType>) {
     this.logger.log(`onComplete: ${JSON.stringify(job.data)}`);
     const numberOfJobs = await this.usersQueue.count();
     const activeJobs = await this.usersQueue.getActiveCount();
@@ -52,7 +52,7 @@ export class UserConsumer {
   }
 
   @OnQueueFailed()
-  async onQueueFailed(job: Job<UserType>): Promise<void> {
+  async onQueueFailed(job: Job<UserJobType>): Promise<void> {
     this.logger.log(
       `Error in processing queue: ${JSON.stringify(job.failedReason)}`,
     );

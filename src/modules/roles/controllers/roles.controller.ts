@@ -8,8 +8,8 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { AddRoleDto } from '../dtos/add-role/add-role.dto';
-import { AddRoleService } from '../services/add-role/add-role.service';
+import { AddRoleDto } from '@/modules/roles/dtos';
+import { AddRoleService } from '@/modules/roles/services/add-role/add-role.service';
 
 @Controller('roles')
 export class RolesController {
