@@ -18,9 +18,10 @@ import { BullModule } from '@nestjs/bull';
 import { ProcessUserService } from '@/modules/users/services/process-users/process-users.service';
 import { UserConsumer } from '@/modules/users/consumer/user.consumer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Role } from '@/infra/db/entities/role/role.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, UserRepository]),
+    TypeOrmModule.forFeature([User, Role, UserRepository]),
     BullModule.registerQueueAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
