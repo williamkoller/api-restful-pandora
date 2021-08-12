@@ -19,7 +19,10 @@ export class UpdateUserService {
    * @return {*}  {Promise<User>}
    * @memberof UpdateUserService
    */
-  async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  public async updateUser(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
     const user = await this.loadUserByIdService.loadUserById(id);
 
     const hashPassword = await this.bcryptAdapter.hash(updateUserDto.password);

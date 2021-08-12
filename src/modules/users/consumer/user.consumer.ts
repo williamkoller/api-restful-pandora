@@ -26,7 +26,7 @@ export class UserConsumer {
   ) {}
 
   @Process('process_user')
-  async processUser(job: Job<UserJobType>): Promise<void> {
+  public async processUser(job: Job<UserJobType>): Promise<void> {
     const { name, surname, email, password } = job.data;
 
     await this.loadEmailAlreadyExistsService.loadEmailAlreadyExists(email);
@@ -41,7 +41,7 @@ export class UserConsumer {
   }
 
   @OnQueueCompleted()
-  async onComplete(job: Job<UserJobType>) {
+  public async onComplete(job: Job<UserJobType>) {
     this.logger.log(`onComplete: ${JSON.stringify(job.data)}`);
     const numberOfJobs = await this.usersQueue.count();
     const activeJobs = await this.usersQueue.getActiveCount();
@@ -52,7 +52,7 @@ export class UserConsumer {
   }
 
   @OnQueueFailed()
-  async onQueueFailed(job: Job<UserJobType>): Promise<void> {
+  public async onQueueFailed(job: Job<UserJobType>): Promise<void> {
     this.logger.log(
       `Error in processing queue: ${JSON.stringify(job.failedReason)}`,
     );

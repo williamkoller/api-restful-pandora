@@ -15,7 +15,7 @@ export class DeleteUserService {
    * @return {*}  {Promise<ReturnMessageUserDeleteType>}
    * @memberof DeleteUserService
    */
-  async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
+  public async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
     await this.loadUserByIdService.loadUserById(id);
     return await this.userRepo.deleteUser(id);
   }

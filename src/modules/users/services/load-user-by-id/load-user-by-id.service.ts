@@ -11,7 +11,7 @@ export class LoadUserByIdService {
    * @return {*}  {Promise<User>}
    * @memberof LoadUserByIdService
    */
-  async loadUserById(id: string): Promise<User> {
+  public async loadUserById(id: string): Promise<User> {
     const user = await this.userRepo.findById(id);
 
     if (!user?.id) {

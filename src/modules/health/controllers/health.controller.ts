@@ -16,7 +16,7 @@ export class HealthController {
 
   @Get()
   @HealthCheck()
-  check() {
+  public check() {
     return this.health.check([async () => this.db.pingCheck('database')]);
   }
 }

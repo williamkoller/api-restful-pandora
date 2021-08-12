@@ -18,7 +18,7 @@ export class AddUserService {
    * @return {*}  {Promise<User>}
    * @memberof AddUserService
    */
-  async add(addUserDto: AddUserDto): Promise<User> {
+  public async add(addUserDto: AddUserDto): Promise<User> {
     await this.loadEmailAlreadyExistsService.loadEmailAlreadyExists(
       addUserDto.email,
     );

@@ -21,7 +21,7 @@ export class AuthService {
    * @return {*}  {Promise<UserOutputDto>}
    * @memberof AuthService
    */
-  async validateUser(data: UserInputDto): Promise<UserOutputDto> {
+  public async validateUser(data: UserInputDto): Promise<UserOutputDto> {
     const user = await this.loadUserByEmailService.loadUserByEmail(data.email);
     if (!user) {
       throw new UnauthorizedException('Unauthorized user.');
@@ -51,7 +51,7 @@ export class AuthService {
    * @return {*}  {Promise<string>}
    * @memberof AuthService
    */
-  async generateJwt(user: User): Promise<string> {
+  public async generateJwt(user: User): Promise<string> {
     const payload = {
       id: user.id,
       name: user.name,

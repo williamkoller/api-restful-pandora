@@ -11,7 +11,7 @@ export class LoadProfileUserService {
    * @return {*}  {Promise<UserReturnType>}
    * @memberof LoadProfileUserService
    */
-  async loadProfileUser(id: string): Promise<UserReturnType> {
+  public async loadProfileUser(id: string): Promise<UserReturnType> {
     const user = await this.loadUserByIdService.loadUserById(id);
 
     const userProfile: UserReturnType = {

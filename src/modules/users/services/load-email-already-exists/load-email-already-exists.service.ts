@@ -11,7 +11,7 @@ export class LoadEmailAlreadyExistsService {
    * @return {*}  {Promise<User>}
    * @memberof LoadEmailAlreadyExistsService
    */
-  async loadEmailAlreadyExists(email: string): Promise<User> {
+  public async loadEmailAlreadyExists(email: string): Promise<User> {
     const userExists = await this.userRepo.findByEmail(email);
 
     if (userExists) {

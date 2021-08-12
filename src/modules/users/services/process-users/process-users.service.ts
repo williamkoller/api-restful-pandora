@@ -7,7 +7,7 @@ import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
 export class ProcessUserService {
   constructor(@InjectQueue('users') private usersQueue: Queue) {}
 
-  async processUser(addUserDto: AddUserDto): Promise<void> {
+  public async processUser(addUserDto: AddUserDto): Promise<void> {
     await this.usersQueue.add(
       'process_user',
       { ...addUserDto },
