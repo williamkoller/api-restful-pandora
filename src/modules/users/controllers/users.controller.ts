@@ -59,7 +59,7 @@ export class UsersController {
     status: HttpStatus.CONFLICT,
     description: 'Email already in use.',
   })
-  async add(@Body() data: AddUserDto): Promise<User> {
+  public async add(@Body() data: AddUserDto): Promise<User> {
     return await this.addUserService.add(data);
   }
 
@@ -80,7 +80,7 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     description: 'No record found.',
   })
-  async loadAll(
+  public async loadAll(
     @Query(ValidationPipe) filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<User[]>> {
     return await this.loadAllUsersService.findAll(filterUserDto);
@@ -102,7 +102,7 @@ export class UsersController {
     status: HttpStatus.NOT_FOUND,
     description: 'User not found.',
   })
-  async loadUserByEmail(
+  public async loadUserByEmail(
     @Query() userInputEmailDto: UserInputEmailDto,
   ): Promise<User> {
     const user = await this.loadUserByEmailService.loadUserByEmail(
@@ -131,7 +131,7 @@ export class UsersController {
     description: 'User not found.',
   })
   @ApiBody({ type: UserInputIdDto })
-  async loadUserById(
+  public async loadUserById(
     @Param(ValidationParamsPipe)
     userInputIdDto: UserInputIdDto,
   ): Promise<UserReturnType> {
@@ -157,7 +157,7 @@ export class UsersController {
     description: 'User not found.',
   })
   @ApiBody({ type: UpdateUserDto })
-  async updateUser(
+  public async updateUser(
     @Param('id', ValidationParamsPipe) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
@@ -181,7 +181,7 @@ export class UsersController {
     description: 'User not found.',
   })
   @ApiBody({ type: UserInputIdDto })
-  async deleteUser(
+  public async deleteUser(
     @Param(ValidationParamsPipe) userInputIdDto: UserInputIdDto,
   ): Promise<ReturnMessageUserDeleteType> {
     return await this.deleteUserService.deleteUser(userInputIdDto.id);
@@ -199,7 +199,7 @@ export class UsersController {
     status: HttpStatus.OK,
     description: 'Process queue',
   })
-  async processUser(@Body() addUserDto: AddUserDto): Promise<void> {
+  public async processUser(@Body() addUserDto: AddUserDto): Promise<void> {
     await this.processUserService.processUser(addUserDto);
   }
 }

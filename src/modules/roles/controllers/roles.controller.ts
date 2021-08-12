@@ -19,9 +19,9 @@ import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
 export class RolesController {
   constructor(private readonly addRoleService: AddRoleService) {}
 
+  @Post()
   @UseGuards(JwtAuthGuard)
   @Permissions(UserPermissions.ADMIN)
-  @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiBearerAuth()
   @ApiResponse({
