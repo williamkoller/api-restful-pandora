@@ -20,6 +20,7 @@ import { UserConsumer } from '@/modules/users/consumer/user.consumer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { RoleRepository } from '@/modules/roles/repositories/role.repository';
+import { LoadUserByRoleService } from '@/modules/roles/services/load-user-by-role/load-user-by-role.service';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { RoleRepository } from '@/modules/roles/repositories/role.repository';
     DeleteUserService,
     ProcessUserService,
     UserConsumer,
+    LoadUserByRoleService,
   ],
   controllers: [UsersController],
 })
