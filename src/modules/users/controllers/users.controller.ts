@@ -21,7 +21,13 @@ import { LoadAllUsersService } from '@/modules/users/services/load-all-users/loa
 import { LoadUserByEmailService } from '@/modules/users/services/load-user-by-email/load-user-by-email.service';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
 import { ValidationParamsPipe } from '@/common/pipes/validation-params.pipe';
-import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiHeader,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserInputEmailDto } from '@/modules/users/dtos/user-input/user-input-email/user-input.email.dto';
 import { UserInputIdDto } from '@/modules/users/dtos/user-input/user-input-id/user-input-id.dto';
 import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
@@ -67,6 +73,9 @@ export class UsersController {
   @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -87,8 +96,12 @@ export class UsersController {
   }
 
   @Get('load-user-by-email')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -115,8 +128,12 @@ export class UsersController {
   }
 
   @Get('load-user-by-id/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -141,8 +158,12 @@ export class UsersController {
   }
 
   @Put('update/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -165,8 +186,12 @@ export class UsersController {
   }
 
   @Delete('delete/:id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,
@@ -188,8 +213,12 @@ export class UsersController {
   }
 
   @Post('process-user')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.UNAUTHORIZED,

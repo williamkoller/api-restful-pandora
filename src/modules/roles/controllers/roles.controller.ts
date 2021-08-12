@@ -10,9 +10,15 @@ import {
 } from '@nestjs/common';
 import { AddRoleDto } from '@/modules/roles/dtos';
 import { AddRoleService } from '@/modules/roles/services/add-role/add-role.service';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiHeader,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Permissions } from '@/modules/users/decorators/permissions.decorator';
 import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
+import { PermissionsGuard } from '@/modules/users/guards/permissions.guard';
 
 @ApiTags('roles')
 @Controller('roles')
@@ -20,9 +26,12 @@ export class RolesController {
   constructor(private readonly addRoleService: AddRoleService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
   @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.CREATED)
+  @ApiHeader({
+    name: 'x-role',
+  })
   @ApiBearerAuth()
   @ApiResponse({
     status: HttpStatus.CREATED,
