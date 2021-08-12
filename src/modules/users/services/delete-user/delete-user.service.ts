@@ -1,4 +1,4 @@
-import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
+import { ReturnMessageType } from '@/utils/types/return-message/return-message.type';
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
@@ -15,7 +15,7 @@ export class DeleteUserService {
    * @return {*}  {Promise<ReturnMessageUserDeleteType>}
    * @memberof DeleteUserService
    */
-  public async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
+  public async deleteUser(id: string): Promise<ReturnMessageType> {
     await this.loadUserByIdService.loadUserById(id);
     return await this.userRepo.deleteUser(id);
   }

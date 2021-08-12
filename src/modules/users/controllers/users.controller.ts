@@ -28,7 +28,7 @@ import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 import { UpdateUserService } from '@/modules/users/services/update-user/update-user.service';
 import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
 import { DeleteUserService } from '@/modules/users/services/delete-user/delete-user.service';
-import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
+import { ReturnMessageType } from '@/utils/types/return-message/return-message.type';
 import { ProcessUserService } from '@/modules/users/services/process-users/process-users.service';
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
@@ -183,7 +183,7 @@ export class UsersController {
   @ApiBody({ type: UserInputIdDto })
   public async deleteUser(
     @Param(ValidationParamsPipe) userInputIdDto: UserInputIdDto,
-  ): Promise<ReturnMessageUserDeleteType> {
+  ): Promise<ReturnMessageType> {
     return await this.deleteUserService.deleteUser(userInputIdDto.id);
   }
 
