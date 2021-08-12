@@ -8,7 +8,7 @@ export class CalculateOffsetService {
    * @return {*}  {number}
    * @memberof CalculateOffsetService
    */
-  calculateOffset(page: number, limit: number): number {
+  public calculateOffset(page: number, limit: number): number {
     const offset = limit * (page - 1);
 
     return offset;

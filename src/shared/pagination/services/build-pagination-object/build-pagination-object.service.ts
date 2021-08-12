@@ -9,7 +9,7 @@ export class BuildPaginationObjectService {
    * @return {*}  {Pagination}
    * @memberof BuildPaginationObjectService
    */
-  buildPaginationObject(paginationData: PaginationDto): Pagination {
+  public buildPaginationObject(paginationData: PaginationDto): Pagination {
     const { totalCount, page } = paginationData;
 
     const offset = Number(paginationData.offset);

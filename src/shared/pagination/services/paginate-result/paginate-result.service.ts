@@ -9,7 +9,7 @@ export class PaginateResultService {
    * @return {*}  {string[]}
    * @memberof PaginateResultService
    */
-  paginateResultSetKeys(
+  public paginateResultSetKeys(
     keys: string[],
     offset: number,
     limit: number,
