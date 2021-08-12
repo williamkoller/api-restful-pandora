@@ -1,5 +1,5 @@
-import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
+import { ReturnMessageType } from '@/utils/types/return-message/return-message.type';
 
 export interface DeleteUserRepository {
-  deleteUser: (id: string) => Promise<ReturnMessageUserDeleteType>;
+  deleteUser: (id: string) => Promise<ReturnMessageType>;
 }
