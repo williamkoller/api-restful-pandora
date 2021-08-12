@@ -4,6 +4,7 @@ import {
   FindByIdRepository,
   FindByNameRepository,
   FindRoleAndCountRepository,
+  FindRolePermissionsRepository,
   UpdateRoleRepository,
 } from '@/data/protocols/db/role';
 import { Role } from '@/infra/db/entities/role/role.entity';
@@ -20,6 +21,7 @@ export class RoleRepository
     FindByIdRepository,
     FindByNameRepository,
     FindRoleAndCountRepository,
+    FindRolePermissionsRepository,
     UpdateRoleRepository
 {
   /**
@@ -90,5 +92,18 @@ export class RoleRepository
       message: 'Role deleted with successfully.',
       deleted: true,
     };
+  }
+
+  /**
+   * @param {string[]} permissions
+   * @return {*}  {Promise<string[]>}
+   * @memberof RoleRepository
+   */
+  public async findRolePermissions(userId: string): Promise<string[]> {
+    const { permissions: permissionsList } = await this.findOne({
+      where: { userId },
+    });
+
+    return permissionsList;
   }
 }

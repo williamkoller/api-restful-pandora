@@ -4,3 +4,4 @@ export * from './find-by-name.repository';
 export * from './find-role-and-count.repository';
 export * from './update-role.repository';
 export * from './delete-role.repository';
+export * from './find-role-permissions.repository';
