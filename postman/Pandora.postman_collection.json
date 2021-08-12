@@ -368,6 +368,40 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Load User By Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-role",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/load-user-by-role",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"load-user-by-role"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
