@@ -6,10 +6,32 @@ import { LoadRoleByIdService } from '@/modules/roles/services/load-role-by-id/lo
 import { LoadRoleByNameService } from '@/modules/roles/services/load-role-by-name/load-role.by-name.service';
 import { AddRoleService } from '@/modules/roles/services/add-role/add-role.service';
 import { RolesController } from '@/modules/roles/controllers/roles.controller';
+import { LoadUserByRoleService } from '@/modules/roles/services/load-user-by-role/load-user-by-role.service';
+import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/load-user-by-id.service';
+import { UserRepository } from '@/modules/users/repositories/user.repository';
+import { PassportModule } from '@nestjs/passport';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Role, RoleRepository])],
-  providers: [LoadRoleByIdService, LoadRoleByNameService, AddRoleService],
+  imports: [
+    TypeOrmModule.forFeature([Role, RoleRepository, UserRepository]),
+    PassportModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        defaultStrategy: configService.get('DEFAULT_STRATEGY'),
+        property: configService.get('PROPERTY_USERS'),
+        session: configService.get('SESSION'),
+      }),
+    }),
+  ],
+  providers: [
+    LoadRoleByIdService,
+    LoadRoleByNameService,
+    AddRoleService,
+    LoadUserByRoleService,
+    LoadUserByIdService,
+  ],
   controllers: [RolesController],
 })
 export class RolesModule {}
