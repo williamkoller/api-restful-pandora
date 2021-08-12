@@ -1,3 +1,4 @@
+import { LoadUserByRoleService } from '@/modules/roles/services/load-user-by-role/load-user-by-role.service';
 import {
   BadRequestException,
   CanActivate,
@@ -9,9 +10,12 @@ import { Reflector } from '@nestjs/core';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly loadUserByRoleService: LoadUserByRoleService,
+  ) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  public async canActivate(context: ExecutionContext): Promise<boolean> {
     const permissions = this.reflector.get<string[]>(
       'permissions',
       context.getHandler(),
@@ -20,15 +24,23 @@ export class PermissionsGuard implements CanActivate {
     if (!permissions) {
       return true;
     }
-    const request = context.switchToHttp().getRequest();
 
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
     const role = request.headers['x-role'];
 
     if (!role) {
       throw new BadRequestException('Role must be informed');
     }
 
-    if (permissions[0] === role) {
+    const loadUserByRole = await this.loadUserByRoleService.findUserByRole(
+      user.id,
+    );
+
+    const hasRole = () =>
+      loadUserByRole.find((roles) => roles.toString() === role.toString());
+
+    if (hasRole()) {
       return true;
     }
 
