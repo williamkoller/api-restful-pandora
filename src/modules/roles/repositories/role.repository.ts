@@ -1,5 +1,6 @@
 import {
   AddRoleRepository,
+  DeleteRoleRepository,
   FindByIdRepository,
   FindByNameRepository,
   FindRoleAndCountRepository,
@@ -8,12 +9,14 @@ import {
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { AddRoleDto, UpdateRoleDto } from '@/modules/roles/dtos';
+import { ReturnMessageType } from '@/utils/types/return-message/return-message.type';
 
 @EntityRepository(Role)
 export class RoleRepository
   extends Repository<Role>
   implements
     AddRoleRepository,
+    DeleteRoleRepository,
     FindByIdRepository,
     FindByNameRepository,
     FindRoleAndCountRepository,
@@ -74,5 +77,18 @@ export class RoleRepository
   ): Promise<Role> {
     const roleUpdated = this.merge(role, { ...updateRoleDto });
     return await this.save(roleUpdated);
+  }
+
+  /**
+   * @param {string} id
+   * @return {*}  {Promise<ReturnMessageType>}
+   * @memberof RoleRepository
+   */
+  public async deleteRole(id: string): Promise<ReturnMessageType> {
+    await this.delete(id);
+    return {
+      message: 'Role deleted with successfully.',
+      deleted: true,
+    };
   }
 }
