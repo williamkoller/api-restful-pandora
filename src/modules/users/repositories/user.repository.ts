@@ -1,14 +1,16 @@
-import { AddUserRepository } from '@/data/protocols/db/user/add-user.repository';
+import {
+  AddUserRepository,
+  FindByEmailRepository,
+  FindByIdRepository,
+  FindUserAndCountRepository,
+  UpdateUserRepository,
+  DeleteUserRepository,
+} from '@/data/protocols/db/user';
 import { User } from '@/infra/db/entities/user/user-entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { AddUserDto } from '@/modules/users/dtos/add-user/add-user.dto';
-import { FindByEmailRepository } from '@/data/protocols/db/user/find-by-email.repository';
-import { FindByIdRepository } from '@/data/protocols/db/user/find-by-id.repository';
-import { FindUserAndCountRepository } from '@/data/protocols/db/user/find-user-and-count.repository';
-import { UpdateUserRepository } from '@/data/protocols/db/user/update-user.repository';
 import { UpdateUserDto } from '@/modules/users/dtos/update-user/update-user.dto';
-import { DeleteUserRepository } from '@/data/protocols/db/user/delete-user.repository';
-import { ReturnMessageUserDeleteType } from '@/utils/types/return-message-user-delete/return-message-user-delete.type';
+import { ReturnMessageType } from '@/utils/types/return-message/return-message.type';
 
 @EntityRepository(User)
 export class UserRepository
@@ -83,7 +85,7 @@ export class UserRepository
    * @return {*}  {Promise<ReturnMessageUserDeleteType>}
    * @memberof UserRepository
    */
-  public async deleteUser(id: string): Promise<ReturnMessageUserDeleteType> {
+  public async deleteUser(id: string): Promise<ReturnMessageType> {
     await this.delete(id);
     return {
       message: 'User deleted with successfully.',
