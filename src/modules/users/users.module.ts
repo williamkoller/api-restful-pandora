@@ -20,8 +20,7 @@ import { UserConsumer } from '@/modules/users/consumer/user.consumer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { RoleRepository } from '@/modules/roles/repositories/role.repository';
-import { APP_GUARD } from '@nestjs/core';
-import { RolesGuard } from '@/modules/users/guards/roles.guard';
+
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Role, UserRepository, RoleRepository]),
@@ -51,10 +50,6 @@ import { RolesGuard } from '@/modules/users/guards/roles.guard';
     DeleteUserService,
     ProcessUserService,
     UserConsumer,
-    {
-      provide: APP_GUARD,
-      useClass: RolesGuard,
-    },
   ],
   controllers: [UsersController],
 })
