@@ -6,6 +6,7 @@ import { JwtService } from '@nestjs/jwt';
 import { User } from '@/infra/db/entities/user/user-entity';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 import { UserRepository } from '@/modules/users/repositories/user.repository';
+import { PayloadType } from '@/modules/auth/types/payload/payload.type';
 
 @Injectable()
 export class AuthService {
@@ -52,7 +53,7 @@ export class AuthService {
    * @memberof AuthService
    */
   public async generateJwt(user: User): Promise<string> {
-    const payload = {
+    const payload: PayloadType = {
       id: user.id,
       name: user.name,
       surname: user.surname,
