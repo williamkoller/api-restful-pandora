@@ -21,7 +21,7 @@ import {
 } from '@nestjs/swagger';
 import { Permissions } from '@/modules/users/decorators/permissions.decorator';
 import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
-import { PermissionsGuard } from '@/modules/users/guards/permissions.guard';
+import { PermissionsGuard } from '@/modules/auth/guards/permissions.guard';
 import { LoadUserByRoleService } from '../services/load-user-by-role/load-user-by-role.service';
 import { Request } from 'express';
 

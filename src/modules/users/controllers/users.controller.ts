@@ -39,7 +39,7 @@ import { ProcessUserService } from '@/modules/users/services/process-users/proce
 import { UserReturnType } from '@/modules/users/types/user-return/user-return.type';
 import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
 import { Permissions } from '@/modules/users/decorators/permissions.decorator';
-import { PermissionsGuard } from '@/modules/users/guards/permissions.guard';
+import { PermissionsGuard } from '@/modules/auth/guards/permissions.guard';
 
 @ApiTags('users')
 @Controller('users')

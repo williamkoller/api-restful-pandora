@@ -36,7 +36,9 @@ export class AuthController {
     status: HttpStatus.UNAUTHORIZED,
     description: 'Unauthorized user.',
   })
-  async login(@Body() userInputDto: UserInputDto): Promise<UserOutputDto> {
+  public async login(
+    @Body() userInputDto: UserInputDto,
+  ): Promise<UserOutputDto> {
     return await this.authService.validateUser(userInputDto);
   }
 
@@ -48,7 +50,7 @@ export class AuthController {
     status: HttpStatus.OK,
     description: 'Load my user.',
   })
-  async me(@Req() request: Request): Promise<UserReturnType> {
+  public async me(@Req() request: Request): Promise<UserReturnType> {
     try {
       return await this.loadProfileUserService.loadProfileUser(
         request.users.id,
