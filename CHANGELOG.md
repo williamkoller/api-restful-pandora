@@ -18,6 +18,7 @@ All notable changes to this project will be documented in this file.
 - Add process queue users;
 - Add UserConsumer;
 - Add Swagger;
+- Add LoadAllRoles, LoadRoleById and UpdateRole
 
 ## Release [x.x.x] - xxxx-xx-xx
 
