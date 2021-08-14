@@ -11,7 +11,7 @@ export class LoadRoleByNameService {
    * @return {*}  {Promise<Role[]>}
    * @memberof LoadRoleByNameService
    */
-  public async findByName(name: string): Promise<Role> {
+  public async loadByName(name: string): Promise<Role> {
     const roles = await this.roleRepo.findByName(name);
 
     if (roles) {

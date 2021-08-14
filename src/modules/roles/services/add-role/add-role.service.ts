@@ -1,6 +1,6 @@
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { Injectable } from '@nestjs/common';
-import { AddRoleDto } from '@/modules/roles/dtos/add-role/add-role.dto';
+import { AddRoleDto } from '@/modules/roles/dtos';
 import { RoleRepository } from '@/modules/roles/repositories/role.repository';
 import { LoadRoleByNameService } from '@/modules/roles/services/load-role-by-name/load-role.by-name.service';
 
@@ -17,7 +17,7 @@ export class AddRoleService {
    * @memberof AddRoleService
    */
   public async add(addRoleDto: AddRoleDto): Promise<Role> {
-    await this.loadRoleByNameService.findByName(addRoleDto.name);
+    await this.loadRoleByNameService.loadByName(addRoleDto.name);
     return await this.roleRepo.add(addRoleDto);
   }
 }

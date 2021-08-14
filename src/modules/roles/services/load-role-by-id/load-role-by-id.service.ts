@@ -7,7 +7,7 @@ import { RoleRepository } from '@/modules/roles/repositories/role.repository';
 export class LoadRoleByIdService {
   constructor(private readonly roleRepo: RoleRepository) {}
 
-  public async findById(id: string): Promise<Role> {
+  public async loadById(id: string): Promise<Role> {
     const role = await this.roleRepo.findById(id);
 
     if (!role) {

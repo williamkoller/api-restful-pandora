@@ -92,7 +92,7 @@ export class UsersController {
   public async loadAll(
     @Query(ValidationPipe) filterUserDto: FilterUserDto,
   ): Promise<ResultWithPagination<User[]>> {
-    return await this.loadAllUsersService.findAll(filterUserDto);
+    return await this.loadAllUsersService.loadAll(filterUserDto);
   }
 
   @Get('load-user-by-email')

@@ -14,7 +14,7 @@ export class LoadUserByRoleService {
    * @return {*}  {Promise<string[]>}
    * @memberof LoadUserByRoleService
    */
-  public async findUserByRole(id: string): Promise<string[]> {
+  public async loadUserByRole(id: string): Promise<string[]> {
     const user = await this.loadUserByIdService.loadUserById(id);
     return await this.roleRepo.findRolePermissions(user.id);
   }
