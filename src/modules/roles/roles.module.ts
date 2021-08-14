@@ -11,6 +11,10 @@ import { LoadUserByIdService } from '@/modules/users/services/load-user-by-id/lo
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UpdateRoleService } from '@/modules/roles/services/update-role/update-role.service';
+import { LoadAllRolesService } from '@/modules/roles/services/load-all-roles/load-all-roles.service';
+import { CalculateOffsetService } from '@/shared/pagination/services/calculate-offset/calculate-offset.service';
+import { BuildPaginationObjectService } from '@/shared/pagination/services/build-pagination-object/build-pagination-object.service';
 
 @Module({
   imports: [
@@ -31,6 +35,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     AddRoleService,
     LoadUserByRoleService,
     LoadUserByIdService,
+    UpdateRoleService,
+    LoadAllRolesService,
+    CalculateOffsetService,
+    BuildPaginationObjectService,
   ],
   controllers: [RolesController],
 })

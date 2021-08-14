@@ -21,10 +21,20 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Role } from '@/infra/db/entities/role/role.entity';
 import { RoleRepository } from '@/modules/roles/repositories/role.repository';
 import { LoadUserByRoleService } from '@/modules/roles/services/load-user-by-role/load-user-by-role.service';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([User, Role, UserRepository, RoleRepository]),
+    PassportModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        defaultStrategy: configService.get('DEFAULT_STRATEGY'),
+        property: configService.get('PROPERTY_USERS'),
+        session: configService.get('SESSION'),
+      }),
+    }),
     BullModule.registerQueueAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
