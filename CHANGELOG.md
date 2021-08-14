@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## Release [v1.0.0] - 2021-06-21
+
 ### Added
 - Add ConfigService of TypeOrm for suing database PostgreSQL;
 - Add Filter, Interceptors and Pipes;
@@ -19,11 +22,6 @@ All notable changes to this project will be documented in this file.
 - Add UserConsumer;
 - Add Swagger;
 - Add LoadAllRoles, LoadRoleById and UpdateRole
-
-## Release [x.x.x] - xxxx-xx-xx
-
-### Added
-
 ### Changed
 
 ### Deprecated
