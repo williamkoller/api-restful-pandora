@@ -7,6 +7,7 @@ import {
   Injectable,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { Request } from 'express';
 
 @Injectable()
 export class PermissionsGuard implements CanActivate {
@@ -15,6 +16,11 @@ export class PermissionsGuard implements CanActivate {
     private readonly loadUserByRoleService: LoadUserByRoleService,
   ) {}
 
+  /**
+   * @param {ExecutionContext} context
+   * @return {*}  {Promise<boolean>}
+   * @memberof PermissionsGuard
+   */
   public async canActivate(context: ExecutionContext): Promise<boolean> {
     const permissions = this.reflector.get<string[]>(
       'permissions',
@@ -25,25 +31,30 @@ export class PermissionsGuard implements CanActivate {
       return true;
     }
 
-    const request = context.switchToHttp().getRequest();
-    const user = request.user;
-    const role = request.headers['x-role'];
+    const { users, headers } = context.switchToHttp().getRequest<Request>();
+
+    if (!users) {
+      throw new BadRequestException(
+        'The property the user of the request is not correctly named or undefined.',
+      );
+    }
+    const role = headers['x-role'];
 
     if (!role) {
       throw new BadRequestException('Role must be informed');
     }
 
-    const loadUserByRole = await this.loadUserByRoleService.findUserByRole(
-      user.id,
+    const loadUserByRole = await this.loadUserByRoleService.loadUserByRole(
+      users.id,
     );
 
-    const hasRole = () =>
-      loadUserByRole.find((roles) => roles.toString() === role.toString());
+    const hasRole = (): string =>
+      loadUserByRole.find((roles) => roles === role);
 
-    if (hasRole()) {
-      return true;
-    }
+    if (hasRole()) return true;
 
-    throw new ForbiddenException();
+    throw new ForbiddenException(
+      'Role does not have permissions to access this endpoint',
+    );
   }
 }
