@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 ### Added
 - Add new version 1.0.1 in Swagger
 
+### Removed
+- Remove node-fetch and module.hot in Main
+
 ## Release [v1.0.1] - 2021-07-17
 
 ### Added 
