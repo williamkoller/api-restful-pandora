@@ -5,7 +5,7 @@ export const swaggerConfig = (app: NestExpressApplication): void => {
   const config = new DocumentBuilder()
     .setTitle('Pandora Example')
     .setDescription('The Pandora API description')
-    .setVersion('0.0.1')
+    .setVersion('1.0.1')
     .addTag('users')
     .addTag('auth')
     .addTag('health')
