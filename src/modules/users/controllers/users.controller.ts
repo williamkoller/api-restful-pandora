@@ -179,10 +179,13 @@ export class UsersController {
   })
   @ApiBody({ type: UpdateUserDto })
   public async updateUser(
-    @Param('id', ValidationParamsPipe) id: string,
+    @Param(ValidationParamsPipe) userInputIdDto: UserInputIdDto,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return await this.updateUserService.updateUser(id, updateUserDto);
+    return await this.updateUserService.updateUser(
+      userInputIdDto.id,
+      updateUserDto,
+    );
   }
 
   @Delete('delete/:id')
