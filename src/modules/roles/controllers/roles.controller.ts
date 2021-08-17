@@ -3,6 +3,7 @@ import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -38,6 +39,8 @@ import { ResultWithPagination } from '@/shared/pagination/interfaces/result-with
 import { LoadAllRolesService } from '@/modules/roles/services/load-all-roles/load-all-roles.service';
 import { ValidationParamsPipe } from '@/common/pipes/validation-params.pipe';
 import { LoadRoleByIdService } from '@/modules/roles/services/load-role-by-id/load-role-by-id.service';
+import { DeleteRoleService } from '@/modules/roles/services/delete-role/delete-role.service';
+import { ReturnMessageType } from '@/utils/types/return-message/return-message.type';
 
 @ApiTags('roles')
 @Controller('roles')
@@ -48,6 +51,7 @@ export class RolesController {
     private readonly updateRoleService: UpdateRoleService,
     private readonly loadAllRolesService: LoadAllRolesService,
     private readonly loadRoleByIdService: LoadRoleByIdService,
+    private readonly deleteRoleService: DeleteRoleService,
   ) {}
 
   @Post()
@@ -72,7 +76,7 @@ export class RolesController {
 
   @Get()
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions(UserPermissions.ADMIN)
+  @Permissions(UserPermissions.ADMIN, UserPermissions.GENERAL)
   @HttpCode(HttpStatus.OK)
   @ApiHeader({
     name: 'x-role',
@@ -160,5 +164,27 @@ export class RolesController {
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<Role> {
     return await this.updateRoleService.updateRole(id, updateRoleDto);
+  }
+
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
+  @HttpCode(HttpStatus.OK)
+  @ApiHeader({
+    name: 'x-role',
+  })
+  @ApiBearerAuth()
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'Delete role with successfully.',
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: 'Role not found.',
+  })
+  public async deleteRole(
+    @Param(ValidationParamsPipe) roleInputIdDto: RoleInputIdDto,
+  ): Promise<ReturnMessageType> {
+    return await this.deleteRoleService.deleteRole(roleInputIdDto.id);
   }
 }

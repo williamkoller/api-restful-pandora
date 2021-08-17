@@ -15,6 +15,7 @@ import { UpdateRoleService } from '@/modules/roles/services/update-role/update-r
 import { LoadAllRolesService } from '@/modules/roles/services/load-all-roles/load-all-roles.service';
 import { CalculateOffsetService } from '@/shared/pagination/services/calculate-offset/calculate-offset.service';
 import { BuildPaginationObjectService } from '@/shared/pagination/services/build-pagination-object/build-pagination-object.service';
+import { DeleteRoleService } from '@/modules/roles/services/delete-role/delete-role.service';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { BuildPaginationObjectService } from '@/shared/pagination/services/build
     LoadAllRolesService,
     CalculateOffsetService,
     BuildPaginationObjectService,
+    DeleteRoleService,
   ],
   controllers: [RolesController],
 })
