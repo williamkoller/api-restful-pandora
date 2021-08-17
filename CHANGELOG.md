@@ -7,6 +7,9 @@ All notable changes to this project will be documented in this file.
 - Add deleteRole
 - Add validation decorator permissions
 
+### Fixed
+- Add validation params pipe in endpoint update role
+
 ## Release [v1.0.0] - 2021-06-21
 
 ### Added
