@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"William\",\n  \"surname\": \"Koller\",\n  \"email\": \"williamkoller404@gmail.com\",\n  \"password\": \"Developer30!\"\n}",
+							"raw": "{\n  \"name\": \"Peitro\",\n  \"surname\": \"Koller\",\n  \"email\": \"pietrokoller@gmail.com\",\n  \"password\": \"PietroKoller07!\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -51,7 +51,7 @@
 						"header": [
 							{
 								"key": "x-role",
-								"value": "ADMIN",
+								"value": "GENERAL",
 								"type": "text"
 							}
 						],
@@ -347,10 +347,16 @@
 							]
 						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "x-role",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Admin General\",\n  \"description\": \"General System Administrator\",\n  \"permissions\": [\"ADMIN_GENERAL\", \"ADMIN\", \"GENERAL\"],\n  \"userId\": \"ceaa88d1-b012-4208-b6b9-31442dba652f\"\n}",
+							"raw": "{\n  \"name\": \"System\",\n  \"description\": \"System User\",\n  \"permissions\": [\"USER\", \"USER_SYSTEM\"],\n  \"userId\": \"41a166f7-8336-4ab2-bfaf-c2b48a58a5c6\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -398,6 +404,151 @@
 							"path": [
 								"roles",
 								"load-user-by-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Load All Roles",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-role",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-role",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/a73d1f6f-5aae-4fb2-8da3-3ab12559455d",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"a73d1f6f-5aae-4fb2-8da3-3ab12559455d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Load role by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-role",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/roles/load-role-by-id/eddbedf1-1457-4e83-b175-a7f552138c12",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"load-role-by-id",
+								"eddbedf1-1457-4e83-b175-a7f552138c12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-role",
+								"value": "ADMIN",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"description\": \"System User Default\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/roles/938a9b0d-736e-4682-ada2-68ee169743c6",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"roles",
+								"938a9b0d-736e-4682-ada2-68ee169743c6"
 							]
 						}
 					},
