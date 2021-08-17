@@ -160,10 +160,13 @@ export class RolesController {
     description: 'Role not found.',
   })
   public async updateRole(
-    @Param() id: string,
+    @Param(ValidationParamsPipe) roleInputIdDto: RoleInputIdDto,
     @Body() updateRoleDto: UpdateRoleDto,
   ): Promise<Role> {
-    return await this.updateRoleService.updateRole(id, updateRoleDto);
+    return await this.updateRoleService.updateRole(
+      roleInputIdDto.id,
+      updateRoleDto,
+    );
   }
 
   @Delete(':id')
