@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## Release [v1.0.1] - 2021-07-17
+
 ### Added 
 - Add deleteRole
 - Add validation decorator permissions
