@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Added
+- Add new version 1.0.1 in Swagger
 
 ## Release [v1.0.1] - 2021-07-17
 
