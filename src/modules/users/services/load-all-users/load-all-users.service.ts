@@ -22,7 +22,7 @@ export class LoadAllUsersService {
    */
   public async loadAll(
     filterUserDto: FilterUserDto,
-  ): Promise<ResultWithPagination<Array<User>>> {
+  ): Promise<ResultWithPagination<User[]>> {
     const page = filterUserDto.page ?? 1;
     const limit = filterUserDto.limit ?? 10;
 

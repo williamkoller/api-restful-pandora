@@ -51,7 +51,10 @@ export class PermissionsGuard implements CanActivate {
     const hasRole = (): string =>
       loadUserByRole.find((roles) => roles === role);
 
-    if (hasRole()) return true;
+    const hasPermission = (): string =>
+      permissions.find((per) => per === hasRole());
+
+    if (hasPermission() && hasRole()) return true;
 
     throw new ForbiddenException(
       'Role does not have permissions to access this endpoint',
