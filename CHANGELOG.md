@@ -5,6 +5,8 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 ### Added
 - Add new version 1.0.1 in Swagger
+- Add Sentry and SentryInterceptor
+- Add CatsModule
 
 ### Removed
 - Remove node-fetch and module.hot in Main
