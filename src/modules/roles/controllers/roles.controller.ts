@@ -55,8 +55,7 @@ export class RolesController {
   ) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions(UserPermissions.ADMIN)
+  @UseGuards(JwtAuthGuard)
   @HttpCode(HttpStatus.CREATED)
   @ApiHeader({
     name: 'x-role',
@@ -125,7 +124,7 @@ export class RolesController {
 
   @Get('load-user-by-role')
   @UseGuards(JwtAuthGuard, PermissionsGuard)
-  @Permissions(UserPermissions.ADMIN, UserPermissions.USER)
+  @Permissions(UserPermissions.ADMIN)
   @HttpCode(HttpStatus.OK)
   @ApiHeader({
     name: 'x-role',
