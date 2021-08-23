@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 - Add Sentry and SentryInterceptor
 - Add CatsModule
 - Add VerifyToken
+- Add findByID, findByName and findCatAndCount in catsRepository
 
 ### Removed
 - Remove node-fetch and module.hot in Main
