@@ -8,6 +8,14 @@ import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapte
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { PayloadType } from '@/modules/auth/types/payload/payload.type';
 
+type VerifyTokenType = {
+  id: string;
+  name: string;
+  surname: string;
+  iat: Date;
+  exp: string;
+};
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -39,11 +47,19 @@ export class AuthService {
       throw new UnauthorizedException('Incorrect password or email.');
     }
 
+    const token = await this.generateJwt(user);
+
+    const verifyToken = await this.verifyJwt(token);
+
+    if (user.id !== verifyToken.id) {
+      throw new UnauthorizedException('Invalid Token.');
+    }
+
     delete user.password;
 
     return {
       user,
-      token: await this.generateJwt(user),
+      token,
     };
   }
 
@@ -60,5 +76,16 @@ export class AuthService {
     };
 
     return this.jwtService.signAsync(payload);
+  }
+
+  /**
+   * @param {string} token
+   * @return {*}  {Promise<string[]>}
+   * @memberof AuthService
+   */
+  public async verifyJwt(token: string): Promise<VerifyTokenType> {
+    return this.jwtService.verifyAsync(token, {
+      secret: process.env.JWT_SECRET,
+    });
   }
 }
