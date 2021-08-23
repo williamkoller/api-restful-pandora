@@ -17,6 +17,9 @@ import { UserReturnType } from '@/modules/users/types/user-return/user-return.ty
 import { LoadProfileUserService } from '@/modules/users/services/load-profile-user/load-profile-user.service';
 import { JwtAuthGuard } from '@/modules/auth/guards/jwt-auth.guard';
 import { Request } from 'express';
+import { PermissionsGuard } from '@/modules/auth/guards/permissions.guard';
+import { Permissions } from '@/modules/users/decorators/permissions.decorator';
+import { UserPermissions } from '@/modules/users/enum/user-permissions.enum';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -42,7 +45,8 @@ export class AuthController {
     return await this.authService.validateUser(userInputDto);
   }
 
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, PermissionsGuard)
+  @Permissions(UserPermissions.ADMIN)
   @ApiBearerAuth()
   @Get('me')
   @HttpCode(HttpStatus.OK)

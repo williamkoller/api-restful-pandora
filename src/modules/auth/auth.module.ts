@@ -13,6 +13,7 @@ import { LoadProfileUserService } from '@/modules/users/services/load-profile-us
 import { UserRepository } from '@/modules/users/repositories/user.repository';
 import { BcryptAdapter } from '@/infra/cryptography/bcrypt-adapter/bcrypt-adapter';
 import { RoleRepository } from '@/modules/roles/repositories/role.repository';
+import { LoadUserByRoleService } from '@/modules/roles/services/load-user-by-role/load-user-by-role.service';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { RoleRepository } from '@/modules/roles/repositories/role.repository';
     JwtStrategy,
     PassportModule,
     LoadProfileUserService,
+    LoadUserByRoleService,
   ],
   controllers: [AuthController],
 })
