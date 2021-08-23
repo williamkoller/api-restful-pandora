@@ -30,7 +30,9 @@
     "seed:create": "npm run typeorm -- migration:create -c seed -n ",
     "seed:run": "npm run typeorm -- migration:run -c seed",
     "seed:revert": "npm run typeorm -- migration:revert -c seed",
-    "npm-check": "npm-check -s -u"
+    "npm-check": "npm-check -s -u",
+    "up": "docker-compose -f docker-compose.yml -f docker-compose.redis.yml up -d && yarn start:dev",
+    "down": "docker-compose -f docker-compose.yml -f docker-compose.redis.yml down"
   },
   "dependencies": {
     "@nestjs/bull": "^0.4.1",
