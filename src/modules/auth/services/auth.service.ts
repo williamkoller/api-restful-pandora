@@ -51,9 +51,7 @@ export class AuthService {
 
     const verifyToken = await this.verifyJwt(token);
 
-    if (user.id !== verifyToken.id) {
-      throw new UnauthorizedException('Invalid Token.');
-    }
+    this.verifyUserHasToken(user.id, verifyToken.id);
 
     delete user.password;
 
@@ -87,5 +85,19 @@ export class AuthService {
     return this.jwtService.verifyAsync(token, {
       secret: process.env.JWT_SECRET,
     });
+  }
+
+  /**
+   * @private
+   * @param {string} userId
+   * @param {string} userTokenId
+   * @memberof AuthService
+   */
+  private verifyUserHasToken(userId: string, userTokenId: string): void {
+    const userHasToken = () => userId !== userTokenId;
+
+    if (userHasToken()) {
+      throw new UnauthorizedException('Invalid Token.');
+    }
   }
 }
