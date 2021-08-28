@@ -11,7 +11,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
-    "pm2:start": "pm2 start ./dist/main.js --name api-rest-ful-pandora",
+    "pm2:start": "NODE_NEV=development pm2 start ./dist/main.js --name api-rest-ful-pandora",
     "pm2:link": "pm2 link s7kksdk05vcxn05 595zhxe251loskc api-restful-pandora",
     "pm2:delete": "pm2 link delete",
     "pm2:logs": "pm2 logs",
