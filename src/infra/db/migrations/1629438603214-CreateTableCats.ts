@@ -5,7 +5,7 @@ export class CreateTableCats1629438603214 implements MigrationInterface {
     await queryRunner.query(`CREATE TABLE "cats" (
         "id" uuid NOT NULL DEFAULT uuid_generate_v4(),
         "name" character varying NOT NULL,
-        "age" int NOT NULL,
+        "age" TIMESTAMP NOT NULL,
         "createdAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
         "updatedAt" TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
         CONSTRAINT "cats_pk"PRIMARY KEY ("id")
