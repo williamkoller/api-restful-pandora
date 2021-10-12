@@ -11,6 +11,7 @@ import { HealthModule } from '@/modules/health/health.module';
 import { TerminusModule } from '@nestjs/terminus';
 import { HealthController } from '@/modules/health/controllers/health.controller';
 import { RolesModule } from '@/modules/roles/roles.module';
+import { CatsModule } from '../cats/cats.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { RolesModule } from '@/modules/roles/roles.module';
     forwardRef(() => HealthModule),
     forwardRef(() => TerminusModule),
     forwardRef(() => RolesModule),
+    forwardRef(() => CatsModule),
   ],
   controllers: [HealthController],
   providers: [

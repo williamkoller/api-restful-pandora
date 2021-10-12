@@ -1,6 +1,6 @@
 import { Cat } from '@/infra/db/entities/cat/cat.entity';
 import { EntityRepository, Repository } from 'typeorm';
-import { CreateCatDto } from '../dtos/create-cat/create-cat.dto';
+import { CreateCatDto } from '@/modules/cats/dtos/create-cat/create-cat.dto';
 
 @EntityRepository(Cat)
 export class CatsRepository extends Repository<Cat> {
@@ -10,7 +10,7 @@ export class CatsRepository extends Repository<Cat> {
    * @memberof CatsRepository
    */
   public async add(createCatDto: CreateCatDto): Promise<Cat> {
-    const createdCat = this.create(createCatDto);
+    const createdCat = Object.assign({} as Cat, createCatDto);
     return await this.save(createdCat);
   }
 
