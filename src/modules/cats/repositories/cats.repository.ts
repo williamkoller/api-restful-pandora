@@ -1,49 +1,36 @@
 import { Cat } from '@/infra/db/entities/cat/cat.entity';
 import { EntityRepository, Repository } from 'typeorm';
 import { CreateCatDto } from '@/modules/cats/dtos/create-cat/create-cat.dto';
+import { AddCatRepository, FindByIdRepository } from '@/data/protocols/db/cat';
 
 @EntityRepository(Cat)
-export class CatsRepository extends Repository<Cat> {
-  /**
-   * @param {CreateCatDto} createCatDto
-   * @return {*}  {Promise<Cat>}
-   * @memberof CatsRepository
-   */
+export class CatsRepository
+  extends Repository<Cat>
+  implements AddCatRepository, FindByIdRepository
+{
   public async add(createCatDto: CreateCatDto): Promise<Cat> {
     const createdCat = Object.assign({} as Cat, createCatDto);
     return await this.save(createdCat);
   }
 
-  /**
-   * @param {string} id
-   * @return {*}  {Promise<Cat>}
-   * @memberof CatsRepository
-   */
   public async findById(id: string): Promise<Cat> {
     return await this.findOne({ where: { id } });
   }
 
-  /**
-   * @param {string} name
-   * @return {*}  {Promise<Cat>}
-   * @memberof CatsRepository
-   */
   public async finByName(name: string): Promise<Cat> {
     return await this.createQueryBuilder('cats')
       .where('(cats.name ILIKE :name)', { name: `%${name}%` })
       .getOne();
   }
 
-  /**
-   * @param {number} offset
-   * @param {number} limit
-   * @return {*}  {Promise<[Cat[], number]>}
-   * @memberof CatsRepository
-   */
   public async findCatAndCount(
     offset: number,
     limit: number,
   ): Promise<[Cat[], number]> {
     return await this.findAndCount({ skip: offset, take: limit });
+  }
+
+  public async findCount(): Promise<number> {
+    return await this.count();
   }
 }
