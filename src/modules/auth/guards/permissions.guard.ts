@@ -41,7 +41,7 @@ export class PermissionsGuard implements CanActivate {
     const role = headers['x-role'];
 
     if (!role) {
-      throw new BadRequestException('Role must be informed');
+      throw new BadRequestException('Role must be informed.');
     }
 
     const loadUserByRole = await this.loadUserByRoleService.loadUserByRole(

@@ -100,10 +100,10 @@ export class RoleRepository
    * @memberof RoleRepository
    */
   public async findRolePermissions(userId: string): Promise<string[]> {
-    const { permissions: permissionsList } = await this.findOne({
+    const { permissions: permissionsByUser } = await this.findOne({
       where: { userId },
     });
 
-    return permissionsList;
+    return permissionsByUser;
   }
 }

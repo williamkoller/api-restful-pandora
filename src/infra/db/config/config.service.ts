@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+// tslint:disable-next-line: no-var-requires
 require('dotenv').config();
 
 class ConfigService {
@@ -13,6 +14,12 @@ class ConfigService {
     }
 
     return value;
+  }
+
+  public getSentryConfig() {
+    const environment = this.getValue('SENTRY_ENV', false);
+    const dsn = this.getValue('SENTRY_DSN', false);
+    return { environment, dsn };
   }
 
   public ensureValues(keys: string[]) {
@@ -67,6 +74,8 @@ const configService = new ConfigService(process.env).ensureValues([
   'DATABASE_URI',
   'REDIS_PORT',
   'REDIS_HOST',
+  'SENTRY_ENV',
+  'SENTRY_DSN',
 ]);
 
 export { configService };

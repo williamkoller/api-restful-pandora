@@ -6,23 +6,23 @@ import { ModelNotFoundException } from '@/common/filters/model-not-found.excepti
 import { TimeoutInterceptor } from '@/common/interceptors/timeout.interceptor';
 import { swaggerConfig } from '@/docs/swagger-config';
 import { HttpExceptionFilter } from '@/common/filters/http-exception.filter';
-
-const key = 'fetch';
-
-global[key] = require('node-fetch');
-
-declare const module: any;
+import { configService } from '@/infra/db/config/config.service';
+import { SentryInterceptor } from '@/modules/core/interceptors/sentry.intercepor';
+import * as Sentry from '@sentry/node';
 
 async function bootstrap(): Promise<void> {
   const logger = new Logger('Main');
-
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  const { environment, dsn } = configService.getSentryConfig();
+
+  Sentry.init({ environment, dsn });
 
   app.setGlobalPrefix('api');
 
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
   app.useGlobalFilters(new ModelNotFoundException(), new HttpExceptionFilter());
-  app.useGlobalInterceptors(new TimeoutInterceptor());
+  app.useGlobalInterceptors(new TimeoutInterceptor(), new SentryInterceptor());
 
   swaggerConfig(app);
 
@@ -32,10 +32,5 @@ async function bootstrap(): Promise<void> {
   });
 
   await app.listen(process.env.PORT, () => logger.log(`App running 🔥`));
-
-  if (module.hot) {
-    module.hot.accept();
-    module.hot.dispose(() => app.close());
-  }
 }
 bootstrap();
