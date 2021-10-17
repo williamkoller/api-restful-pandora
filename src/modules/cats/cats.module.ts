@@ -8,6 +8,7 @@ import { LoadUserByRoleService } from '../roles/services/load-user-by-role/load-
 import { LoadUserByIdService } from '../users/services/load-user-by-id/load-user-by-id.service';
 import { RoleRepository } from '../roles/repositories/role.repository';
 import { UserRepository } from '../users/repositories/user.repository';
+import { FindCountService } from '@/modules/cats/services/find-count/find-count.service';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { UserRepository } from '../users/repositories/user.repository';
       UserRepository,
     ]),
   ],
-  providers: [AddCatService, LoadUserByRoleService, LoadUserByIdService],
+  providers: [AddCatService, LoadUserByRoleService, LoadUserByIdService, FindCountService],
   controllers: [CatsController],
 })
 export class CatsModule {}
